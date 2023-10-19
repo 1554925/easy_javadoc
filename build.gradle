@@ -9,7 +9,7 @@ apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'kotlin'
 
 group 'com.star.easydoc'
-version '3.6.0'
+version '4.0.0'
 
 repositories {
     mavenCentral()
@@ -28,21 +28,25 @@ targetCompatibility = 1.8
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
     plugins = ['Kotlin']
-//    plugins 'java'
     version '2019.1'
-    pluginName 'Easy Javadoc'
+    pluginName 'Step Easy Javadoc'
     updateSinceUntilBuild false
 }
 
 dependencies {
     implementation 'com.alibaba.fastjson2:fastjson2:2.0.21'
+    implementation 'com.example.cloud.project:integrated-common:1.0.3-SNAPSHOT'
 }
 
 //配置编码格式
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
 }
-
+repositories {
+    mavenLocal()
+    maven { url 'https://maven.aliyun.com/repository/public' }
+    maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+}
 
 task fatJar(type: Jar) {
     manifest.from jar.manifest

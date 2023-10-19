@@ -17,6 +17,7 @@ import com.star.easydoc.javadoc.service.JavaDocGeneratorServiceImpl;
  * 创建类, 可能有更便捷的方式创建实体类. 有待优化
  */
 public class PackageInfoService {
+
     public static final String INFO_FILE_NAME = "package-info.java";
     public static final String PACKAGE_INFO_DESCRIBE = "PACKAGE_INFO_DESCRIBE";
     private static JavaDocGeneratorServiceImpl docGeneratorService = ServiceManager.getService(JavaDocGeneratorServiceImpl.class);

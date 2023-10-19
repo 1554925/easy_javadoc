@@ -89,6 +89,7 @@ public class CommonSettingsConfigurable implements Configurable {
         config.setYoudaoAppSecret(view.getYoudaoAppSecretTextField().getText());
         config.setMicrosoftKey(view.getMicrosoftKeyTextField().getText());
         config.setGoogleKey(view.getGoogleKeyTextField().getText());
+
         if (config.getWordMap() == null) {
             config.setWordMap(new TreeMap<>());
         }

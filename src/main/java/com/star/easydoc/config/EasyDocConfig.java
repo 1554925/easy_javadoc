@@ -69,7 +69,7 @@ public class EasyDocConfig {
     /**
      * 翻译方式
      */
-    private String translator = Consts.YOUDAO_TRANSLATOR;
+    private String translator = Consts.ALIYUN_TRANSLATOR;
     /**
      * 百度app id
      */
@@ -152,7 +152,7 @@ public class EasyDocConfig {
         kdocSimpleFieldDoc = false;
         docPriority = DOC_FIRST;
         kdocParamType = LINK_PARAM_TYPE;
-        translator = Consts.YOUDAO_TRANSLATOR;
+        translator = Consts.ALIYUN_TRANSLATOR;
         appId = null;
         token = null;
         secretKey = null;

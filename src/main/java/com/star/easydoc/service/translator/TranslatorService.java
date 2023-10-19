@@ -27,7 +27,6 @@ import com.star.easydoc.service.translator.impl.MicrosoftTranslator;
 import com.star.easydoc.service.translator.impl.SimpleSplitterTranslator;
 import com.star.easydoc.service.translator.impl.TencentTranslator;
 import com.star.easydoc.service.translator.impl.YoudaoAiTranslator;
-import com.star.easydoc.service.translator.impl.YoudaoTranslator;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -60,7 +59,6 @@ public class TranslatorService {
                 .put(Consts.TENCENT_TRANSLATOR, new TencentTranslator().init(config))
                 .put(Consts.JINSHAN_TRANSLATOR, new JinshanTranslator().init(config))
                 .put(Consts.YOUDAO_AI_TRANSLATOR, new YoudaoAiTranslator().init(config))
-                .put(Consts.YOUDAO_TRANSLATOR, new YoudaoTranslator().init(config))
                 .put(Consts.MICROSOFT_TRANSLATOR, new MicrosoftTranslator().init(config))
                 .put(Consts.MICROSOFT_FREE_TRANSLATOR, new MicrosoftFreeTranslator().init(config))
                 .put(Consts.GOOGLE_TRANSLATOR, new GoogleTranslator().init(config))

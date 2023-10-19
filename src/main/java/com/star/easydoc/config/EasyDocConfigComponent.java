@@ -2,6 +2,7 @@ package com.star.easydoc.config;
 
 import java.util.Objects;
 
+import com.example.cloud.project.integrated.common.domain.channel.TranslateChannelType;
 import com.google.common.collect.Maps;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
@@ -24,28 +25,34 @@ public class EasyDocConfigComponent implements PersistentStateComponent<EasyDocC
     @Nullable
     @Override
     public EasyDocConfig getState() {
-        if (config == null) {
-            config = new EasyDocConfig();
-            config.setAuthor(System.getProperty("user.name"));
-            config.setKdocAuthor(System.getProperty("user.name"));
-            config.setDateFormat(Consts.DEFAULT_DATE_FORMAT);
-            config.setDocPriority(EasyDocConfig.DOC_FIRST);
-            config.setKdocDateFormat(Consts.DEFAULT_DATE_FORMAT);
-            config.setSimpleFieldDoc(true);
-            config.setKdocSimpleFieldDoc(true);
-            config.setKdocParamType(EasyDocConfig.LINK_PARAM_TYPE);
-            config.setMethodReturnType(EasyDocConfig.LINK_RETURN_TYPE);
-            config.setWordMap(Maps.newTreeMap());
-            config.setProjectWordMap(Maps.newTreeMap());
-            config.setTranslator(Consts.YOUDAO_TRANSLATOR);
-            config.setClassTemplateConfig(new TemplateConfig());
-            config.setKdocClassTemplateConfig(new TemplateConfig());
-            config.setMethodTemplateConfig(new TemplateConfig());
-            config.setKdocMethodTemplateConfig(new TemplateConfig());
-            config.setFieldTemplateConfig(new TemplateConfig());
-            config.setKdocFieldTemplateConfig(new TemplateConfig());
+        try{
+            System.out.println(TranslateChannelType.Aliyun.getOfficialName());
+            if (config == null) {
+                config = new EasyDocConfig();
+                config.setAuthor(System.getProperty("user.name"));
+                config.setKdocAuthor(System.getProperty("user.name"));
+                config.setDateFormat(Consts.DEFAULT_DATE_FORMAT);
+                config.setDocPriority(EasyDocConfig.DOC_FIRST);
+                config.setKdocDateFormat(Consts.DEFAULT_DATE_FORMAT);
+                config.setSimpleFieldDoc(true);
+                config.setKdocSimpleFieldDoc(true);
+                config.setKdocParamType(EasyDocConfig.LINK_PARAM_TYPE);
+                config.setMethodReturnType(EasyDocConfig.LINK_RETURN_TYPE);
+                config.setWordMap(Maps.newTreeMap());
+                config.setProjectWordMap(Maps.newTreeMap());
+                config.setTranslator(Consts.ALIYUN_TRANSLATOR);
+                config.setClassTemplateConfig(new TemplateConfig());
+                config.setKdocClassTemplateConfig(new TemplateConfig());
+                config.setMethodTemplateConfig(new TemplateConfig());
+                config.setKdocMethodTemplateConfig(new TemplateConfig());
+                config.setFieldTemplateConfig(new TemplateConfig());
+                config.setKdocFieldTemplateConfig(new TemplateConfig());
+            }
+            return config;
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        return config;
+        return null;
     }
 
     @Override
