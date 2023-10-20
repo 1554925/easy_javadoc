@@ -16,4 +16,5 @@ public interface TranslateChannel {
     String getSource();
     void setText(String text);
     String getText();
+    String getType();
 }

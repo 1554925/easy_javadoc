@@ -50,14 +50,11 @@ public class AliyunTranslator implements AppIdSecretTranslator {
         request.setSourceText(translate.getText());
         String json = null;
         try {
-            String url = translate.channel().getTranslateUrl();
+            String url = translate.channelType().getTranslateUrl();
             json = sendPost(url, JSON.toJSONString(request),translate.getAppId(), translate.getAppSecret());
             AliyunResponseVO responseVO = JSON.parseObject(json, AliyunResponseVO.class);
             AliyunResponseDataVO data =  Objects.requireNonNull(responseVO).getData();
-            return TranslateResponse.builder()
-                    .target(data.getTranslated())
-                    .wordLength(data.getWordCount())
-                    .build();
+            return TranslateResponse.of(data.getTranslated(),data.getWordCount());
         } catch (Exception e) {
             log.error("请求阿里云翻译接口异常:请检查本地网络是否可连接外网,也有可能被阿里云限流,response=" + json, e);
             return null;

@@ -17,15 +17,17 @@ public class TransformInformation {
     public static final String TABLE_NAME = "TRANSFORM_INFORMATION";
 
     @TableId(type = IdType.AUTO)
-    private long id;
+    private Long id;
 
     private String type;
 
     private String status;
 
-    private String source;
+    private String sourceValue;
 
-    private String target;
+    private String text;
+
+    private String targetValue;
 
     private String wordLength;
 

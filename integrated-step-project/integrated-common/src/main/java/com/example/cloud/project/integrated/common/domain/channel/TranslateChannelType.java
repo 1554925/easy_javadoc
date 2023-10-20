@@ -22,9 +22,9 @@ public enum TranslateChannelType {
     Google("https://cloud.google.com", "" , TranslateChannelType.GOOGLE_TRANSLATOR, "https://cloud.google.com"),
     Microsoft("https://azure.microsoft.com", "" , TranslateChannelType.MICROSOFT_TRANSLATOR, "https://azure.microsoft.com"),
     MicrosoftFree("https://azure.microsoft.com", "" , TranslateChannelType.MICROSOFT_FREE_TRANSLATOR, "https://azure.microsoft.com"),
-    Tencent("https://cloud.tencent.com", "" , TranslateChannelType.TENCENT_TRANSLATOR, "https://cloud.tencent.com/document/product/551/7372"),
+    Tencent("https://tmt.tencentcloudapi.com", "" , TranslateChannelType.TENCENT_TRANSLATOR, "https://cloud.tencent.com/document/product/551/7372"),
     Aliyun("http://mt.cn-hangzhou.aliyuncs.com", "/api/translate/web/ecommerce" , TranslateChannelType.ALIYUN_TRANSLATOR, "https://www.aliyun.com/product/ai/alimt"),
-    JinShan("http://dict-co.iciba.com", "" , TranslateChannelType.JINSHAN_TRANSLATOR, "");
+    JinShan("http://dict-co.iciba.com", "/api/dictionary.php?key=1E55091D2F202FA617472001B3AF0D39&type=json&w=%s" , TranslateChannelType.JINSHAN_TRANSLATOR, "");
 
 
     private final String officialHost;

@@ -50,6 +50,11 @@ public abstract class AbstractTranslateChannel implements TranslateChannel{
     }
 
     @Override
+    public String getType() {
+        return sourceLanguage+"-"+targetLanguage;
+    }
+
+    @Override
     public String getText() {
         return text;
     }

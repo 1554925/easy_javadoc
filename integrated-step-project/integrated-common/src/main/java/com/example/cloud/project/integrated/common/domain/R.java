@@ -42,6 +42,9 @@ public class R<T> {
     public static  <T>  R<T> error(String message) {
         return newInstance(null, FAIL, message);
     }
+    public static  <T>  R<T> error(Exception e) {
+        return newInstance(null, FAIL, e.getMessage());
+    }
 
     public static <T> R<T> error(BizExceptionEnum bizExceptionEnum) {
         return newInstance(null, bizExceptionEnum.code(), bizExceptionEnum.message());

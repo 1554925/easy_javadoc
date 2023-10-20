@@ -3,10 +3,12 @@ package com.example.cloud.project.integrated.translate.controller;
 import com.example.cloud.project.integrated.common.domain.R;
 import com.example.cloud.project.integrated.common.domain.channel.TranslateChannel;
 import com.example.cloud.project.integrated.common.domain.channel.TranslateResponse;
+import com.example.cloud.project.integrated.common.domain.constant.BizExceptionEnum;
 import com.example.cloud.project.integrated.translate.service.TranslatorMangerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,9 +25,18 @@ public class TranslatorMangerController {
     @Autowired
     private TranslatorMangerService service;
 
-    @PostMapping("/auto")
-    public R<TranslateResponse> auto(TranslateChannel translateChannel){
-        return service.auto(translateChannel);
+    @PostMapping("/proxy")
+    public R<TranslateResponse> translate(@RequestBody TranslateChannel translateChannel){
+        try{
+            TranslateResponse response = service.translate(translateChannel);
+            if(response == null){
+                return R.error(BizExceptionEnum.INTERFACE_SYSTEM_ERROR);
+            }
+            return R.ok(response);
+        }catch (Exception e){
+            return R.error(e);
+        }
+
     }
 
 }

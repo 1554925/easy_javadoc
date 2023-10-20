@@ -48,7 +48,7 @@ public class BaiduTranslator implements AppIdSecretTranslator {
                 String salt = RandomStringUtils.randomNumeric(16);
                 String sign = DigestUtils.md5Hex(appId + text + salt + secret);
                 String eText = HttpUtils.encode(text);
-                json = HttpUtils.get(String.format(channel.channel().getTranslateUrl(), appId, salt, sign, eText));
+                json = HttpUtils.get(String.format(channel.channelType().getTranslateUrl(), appId, salt, sign, eText));
                 BaiduResponse response = JSON.parseObject(json, BaiduResponse.class);
                 if (response == null || "54003".equals(response.getErrorCode())) {
                     Thread.sleep(500);
@@ -63,10 +63,7 @@ public class BaiduTranslator implements AppIdSecretTranslator {
             LOGGER.error("请求百度翻译接口异常:请检查本地网络是否可连接外网,也有可能被百度限流,response=" + json, e);
         }
         if(result != null){
-            return TranslateResponse.builder()
-                    .target(result.getDst())
-                    .wordLength(String.valueOf(result.getDst().length()))
-                    .build();
+            return TranslateResponse.of(result.getDst());
         }
         return null;
     }

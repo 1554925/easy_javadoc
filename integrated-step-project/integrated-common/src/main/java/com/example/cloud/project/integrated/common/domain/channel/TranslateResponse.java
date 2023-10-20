@@ -18,4 +18,17 @@ public class TranslateResponse {
     private String target;
     private String wordLength;
 
+    public static TranslateResponse of(String text) {
+        return TranslateResponse.builder()
+                .target(text)
+                .wordLength(String.valueOf(text.length()))
+                .build();
+    }
+    public static TranslateResponse of(String text,String wordLength) {
+        return TranslateResponse.builder()
+                .target(text)
+                .wordLength(wordLength)
+                .build();
+    }
+
 }

@@ -25,7 +25,7 @@ public class ExecutorServiceConfig {
     @Value("${executor.config.queueSize:50}")
     private Integer queueSize;
 
-    @Bean("executor")
+    @Bean("StepExecutor")
     public ExecutorService executor(){
        return new ThreadPoolExecutor(corePoolSize,maximumPoolSize,keepAliveTime,
                TimeUnit.MILLISECONDS,

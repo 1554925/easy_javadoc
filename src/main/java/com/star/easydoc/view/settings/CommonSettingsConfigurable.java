@@ -28,7 +28,7 @@ public class CommonSettingsConfigurable implements Configurable {
     @Nls(capitalization = Capitalization.Title)
     @Override
     public String getDisplayName() {
-        return "EasyDoc";
+        return "StepEasyDoc";
     }
 
     @Nullable
@@ -49,6 +49,9 @@ public class CommonSettingsConfigurable implements Configurable {
             return true;
         }
         if (!Objects.equals(config.getAppKey(), view.getAppKeyTextField().getText())) {
+            return true;
+        }
+        if (!Objects.equals(config.getProxyUrl(), view.getProxyUrlText().getText())) {
             return true;
         }
         return false;
@@ -72,13 +75,8 @@ public class CommonSettingsConfigurable implements Configurable {
         if (config.getTranslator() == null || !Consts.ENABLE_TRANSLATOR_SET.contains(config.getTranslator())) {
             throw new ConfigurationException("请选择正确的翻译方式");
         }
-        if (Consts.BAIDU_TRANSLATOR.equals(config.getTranslator())) {
-            if (StringUtils.isBlank(config.getAppId())) {
-                throw new ConfigurationException("appId不能为空");
-            }
-            if (StringUtils.isBlank(config.getAppSecret())) {
-                throw new ConfigurationException("密钥不能为空");
-            }
+        if (StringUtils.isBlank(config.getProxyUrl())) {
+            throw new ConfigurationException("代理地址不能为空");
         }
 
         switch (config.getTranslator()) {
