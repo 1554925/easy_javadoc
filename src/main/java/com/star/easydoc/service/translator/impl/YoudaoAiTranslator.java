@@ -43,9 +43,9 @@ public class YoudaoAiTranslator extends AbstractTranslator {
         params.put("signType", "v3");
         String curtime = String.valueOf(System.currentTimeMillis() / 1000);
         params.put("curtime", curtime);
-        String signStr = getConfig().getYoudaoAppKey() + truncate(text) + salt + curtime + getConfig().getYoudaoAppSecret();
+        String signStr = getConfig().getAppKey() + truncate(text) + salt + curtime + getConfig().getAppSecret();
         String sign = getDigest(signStr);
-        params.put("appKey", getConfig().getYoudaoAppKey());
+        params.put("appKey", getConfig().getAppKey());
         params.put("q", text);
         params.put("salt", salt);
         params.put("sign", sign);

@@ -11,7 +11,7 @@ import com.example.cloud.project.integrated.common.domain.channel.TranslateAppKe
 public class MicrosoftFreeChannel extends TranslateAppKeyChannel {
 
     @Override
-    public TranslateChannelType channel() {
-        return TranslateChannelType.MicrosoftFree;
+    public String channelName() {
+        return TranslateChannelType.MicrosoftFree.getOfficialName();
     }
 }

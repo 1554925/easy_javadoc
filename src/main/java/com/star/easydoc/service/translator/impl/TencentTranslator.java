@@ -47,7 +47,7 @@ public class TencentTranslator extends AbstractTranslator {
                 params.put("Nonce", new SecureRandom().nextInt(java.lang.Integer.MAX_VALUE));
                 params.put("Timestamp", System.currentTimeMillis() / 1000);
                 params.put("Region", "ap-beijing");
-                params.put("SecretId", getConfig().getSecretId());
+                params.put("SecretId", getConfig().getAppKey());
                 params.put("Action", "TextTranslate");
                 params.put("Version", "2018-03-21");
                 params.put("SourceText", text);
@@ -56,7 +56,7 @@ public class TencentTranslator extends AbstractTranslator {
                 params.put("ProjectId", 0);
 
                 String str2sign = getStringToSign("GET", "tmt.tencentcloudapi.com", params);
-                String signature = sign(str2sign, getConfig().getSecretKey(), "HmacSHA1");
+                String signature = sign(str2sign, getConfig().getAppKey(), "HmacSHA1");
                 params.put("Signature", signature);
                 json = HttpUtil.get("https://tmt.tencentcloudapi.com", params);
                 TencentResult result = JSON.parseObject(json, TencentResult.class);

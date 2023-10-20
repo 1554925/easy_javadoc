@@ -71,45 +71,25 @@ public class EasyDocConfig {
      */
     private String translator = Consts.ALIYUN_TRANSLATOR;
     /**
-     * 百度app id
+     * appId
      */
     private String appId;
     /**
-     * 百度密钥
+     * appSecret
      */
-    private String token;
+    private String appSecret;
+
     /**
-     * 腾讯secretKey
+     * 请求appKey
      */
-    private String secretKey;
+    private String appKey;
+
     /**
-     * 腾讯secretId
+     * 代理地址
      */
-    private String secretId;
-    /**
-     * 阿里云accessKeyId
-     */
-    private String accessKeyId;
-    /**
-     * 阿里云accessKeySecret
-     */
-    private String accessKeySecret;
-    /**
-     * 有道APP_KEY
-     */
-    private String youdaoAppKey;
-    /**
-     * 有道APP_SECRET
-     */
-    private String youdaoAppSecret;
-    /**
-     * 谷歌key
-     */
-    private String googleKey;
-    /**
-     * 微软key
-     */
-    private String microsoftKey;
+    private String proxyUrl;
+
+
     /**
      * 单词映射
      */
@@ -154,13 +134,8 @@ public class EasyDocConfig {
         kdocParamType = LINK_PARAM_TYPE;
         translator = Consts.ALIYUN_TRANSLATOR;
         appId = null;
-        token = null;
-        secretKey = null;
-        secretId = null;
-        accessKeyId = null;
-        accessKeySecret = null;
-        youdaoAppKey = null;
-        youdaoAppSecret = null;
+        appSecret = null;
+        appKey = null;
         wordMap = new TreeMap<>();
         projectWordMap = new TreeMap<>();
         classTemplateConfig = new TemplateConfig();
@@ -389,6 +364,14 @@ public class EasyDocConfig {
         this.author = author;
     }
 
+    public String getProxyUrl() {
+        return proxyUrl;
+    }
+
+    public void setProxyUrl(String proxyUrl) {
+        this.proxyUrl = proxyUrl;
+    }
+
     public String getDateFormat() {
         return dateFormat;
     }
@@ -468,60 +451,20 @@ public class EasyDocConfig {
         this.appId = appId;
     }
 
-    public String getToken() {
-        return token;
+    public String getAppSecret() {
+        return appSecret;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setAppSecret(String appSecret) {
+        this.appSecret = appSecret;
     }
 
-    public String getSecretKey() {
-        return secretKey;
+    public String getAppKey() {
+        return appKey;
     }
 
-    public void setSecretKey(String secretKey) {
-        this.secretKey = secretKey;
-    }
-
-    public String getSecretId() {
-        return secretId;
-    }
-
-    public void setSecretId(String secretId) {
-        this.secretId = secretId;
-    }
-
-    public String getAccessKeyId() {
-        return accessKeyId;
-    }
-
-    public void setAccessKeyId(String accessKeyId) {
-        this.accessKeyId = accessKeyId;
-    }
-
-    public String getAccessKeySecret() {
-        return accessKeySecret;
-    }
-
-    public void setAccessKeySecret(String accessKeySecret) {
-        this.accessKeySecret = accessKeySecret;
-    }
-
-    public String getYoudaoAppKey() {
-        return youdaoAppKey;
-    }
-
-    public void setYoudaoAppKey(String youdaoAppKey) {
-        this.youdaoAppKey = youdaoAppKey;
-    }
-
-    public String getYoudaoAppSecret() {
-        return youdaoAppSecret;
-    }
-
-    public void setYoudaoAppSecret(String youdaoAppSecret) {
-        this.youdaoAppSecret = youdaoAppSecret;
+    public void setAppKey(String appKey) {
+        this.appKey = appKey;
     }
 
     public String getMethodReturnType() {
@@ -585,23 +528,6 @@ public class EasyDocConfig {
 
     public void setVersion(String version) {
         this.version = version;
-    }
-
-    public String getGoogleKey() {
-        return googleKey;
-    }
-    
-
-    public void setGoogleKey(String googleKey) {
-        this.googleKey = googleKey;
-    }
-
-    public String getMicrosoftKey() {
-        return microsoftKey;
-    }
-
-    public void setMicrosoftKey(String microsoftKey) {
-        this.microsoftKey = microsoftKey;
     }
 
     public String getDocPriority() {

@@ -11,7 +11,7 @@ import com.example.cloud.project.integrated.common.domain.channel.TranslateAppKe
 public class GoogleChannel extends TranslateAppKeyChannel {
 
     @Override
-    public TranslateChannelType channel() {
-        return TranslateChannelType.Google;
+    public String channelName() {
+        return TranslateChannelType.Google.getOfficialName();
     }
 }

@@ -11,7 +11,7 @@ import com.example.cloud.project.integrated.common.domain.channel.TranslateChann
 public class AliyunChannel extends TranslateAppIdSecretChannel {
 
     @Override
-    public TranslateChannelType channel() {
-        return TranslateChannelType.Aliyun;
+    public String channelName() {
+        return TranslateChannelType.Aliyun.getOfficialName();
     }
 }

@@ -11,7 +11,7 @@ import com.example.cloud.project.integrated.common.domain.channel.TranslateChann
 public class JinShanChannel extends TranslateAppIdSecretChannel {
 
     @Override
-    public TranslateChannelType channel() {
-        return TranslateChannelType.JinShan;
+    public String channelName() {
+        return TranslateChannelType.JinShan.getOfficialName();
     }
 }

@@ -40,7 +40,7 @@ public class BaiduTranslator extends AbstractTranslator {
         try {
             for (int i = 0; i < 10; i++) {
                 String salt = RandomStringUtils.randomNumeric(16);
-                String sign = DigestUtils.md5Hex(getConfig().getAppId() + text + salt + getConfig().getToken());
+                String sign = DigestUtils.md5Hex(getConfig().getAppId() + text + salt + getConfig().getAppSecret());
                 String eText = HttpUtil.encode(text);
                 json = HttpUtil.get(String.format(URL, getConfig().getAppId(), salt, sign, eText));
                 BaiduResponse response = JSON.parseObject(json, BaiduResponse.class);

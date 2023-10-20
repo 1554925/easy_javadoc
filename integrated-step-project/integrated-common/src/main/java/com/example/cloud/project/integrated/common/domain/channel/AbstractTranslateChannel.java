@@ -12,6 +12,7 @@ public abstract class AbstractTranslateChannel implements TranslateChannel{
     private String targetLanguage;
     private String text;
     private String source;
+    private String channelName;
 
     public void setSource(String source) {
         this.source = source;
@@ -40,6 +41,13 @@ public abstract class AbstractTranslateChannel implements TranslateChannel{
         return source;
     }
 
+    public String getChannelName() {
+        return channelName();
+    }
+
+    public void setChannelName(String channelName) {
+        this.channelName = channelName;
+    }
 
     @Override
     public String getText() {

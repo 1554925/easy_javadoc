@@ -45,7 +45,7 @@ public class MicrosoftTranslator extends AbstractTranslator {
             JSONArray body = new JSONArray();
             body.add(textObject);
             Map<String, String> headers = Maps.newHashMap();
-            headers.put("Ocp-Apim-Subscription-Key", getConfig().getMicrosoftKey());
+            headers.put("Ocp-Apim-Subscription-Key", getConfig().getAppKey());
             json = HttpUtil.postJson(url, headers, JSON.toJSONString(body));
             JSONArray response = JSON.parseArray(json);
             return Objects.requireNonNull(response).getJSONObject(0).getJSONArray("translations").getJSONObject(0).getString("text");

@@ -2,6 +2,8 @@ package com.example.cloud.project.integrated.common.domain.channel;
 
 import lombok.Getter;
 
+import java.util.Arrays;
+
 /**
  * @author gys
  * @version 1.0
@@ -15,20 +17,35 @@ import lombok.Getter;
  */
 @Getter
 public enum TranslateChannelType {
-    Baidu("http://api.fanyi.baidu.com", "/api/trans/vip/translate?from=auto&to=auto&appid=%s&salt=%s&sign=%s&q=%s" , "百度翻译", "https://api.fanyi.baidu.com/doc/21"),
-    YouDaoAi("https://ai.youdao.com", "" , "有道智云翻译", "https://ai.youdao.com"),
-    Google("https://cloud.google.com", "" , "谷歌翻译", "https://cloud.google.com"),
-    Microsoft("https://azure.microsoft.com", "" , "微软翻译", "https://azure.microsoft.com"),
-    MicrosoftFree("https://azure.microsoft.com", "" , "微软免费翻译", "https://azure.microsoft.com"),
-    Tencent("https://cloud.tencent.com", "" , "腾讯翻译", "https://cloud.tencent.com/document/product/551/7372"),
-    Aliyun("http://mt.cn-hangzhou.aliyuncs.com", "/api/translate/web/ecommerce" , "阿里云翻译", "https://www.aliyun.com/product/ai/alimt"),
-    JinShan("http://dict-co.iciba.com", "" , "金山翻译", "");
+    Baidu("http://api.fanyi.baidu.com", "/api/trans/vip/translate?from=auto&to=auto&appid=%s&salt=%s&sign=%s&q=%s" , TranslateChannelType.BAIDU_TRANSLATOR, "https://api.fanyi.baidu.com/doc/21"),
+    YouDaoAi("https://ai.youdao.com", "" , TranslateChannelType.YOUDAO_TRANSLATOR, "https://ai.youdao.com"),
+    Google("https://cloud.google.com", "" , TranslateChannelType.GOOGLE_TRANSLATOR, "https://cloud.google.com"),
+    Microsoft("https://azure.microsoft.com", "" , TranslateChannelType.MICROSOFT_TRANSLATOR, "https://azure.microsoft.com"),
+    MicrosoftFree("https://azure.microsoft.com", "" , TranslateChannelType.MICROSOFT_FREE_TRANSLATOR, "https://azure.microsoft.com"),
+    Tencent("https://cloud.tencent.com", "" , TranslateChannelType.TENCENT_TRANSLATOR, "https://cloud.tencent.com/document/product/551/7372"),
+    Aliyun("http://mt.cn-hangzhou.aliyuncs.com", "/api/translate/web/ecommerce" , TranslateChannelType.ALIYUN_TRANSLATOR, "https://www.aliyun.com/product/ai/alimt"),
+    JinShan("http://dict-co.iciba.com", "" , TranslateChannelType.JINSHAN_TRANSLATOR, "");
 
 
     private final String officialHost;
     private final String officialUri;
     private final String officialName;
     private final String officialApplyUrl;
+    TranslateChannelType(String officialHost, String officialUri, String officialName, String officialApplyUrl) {
+        this.officialHost = officialHost;
+        this.officialUri = officialUri;
+        this.officialName = officialName;
+        this.officialApplyUrl = officialApplyUrl;
+    }
+    public String getTranslateUrl(){
+        return this.officialHost+this.officialUri;
+    }
+
+    public static TranslateChannelType channelType(String name){
+        return Arrays.stream(values()).filter(type -> type.getOfficialName().equals(name)).findFirst().orElse(null);
+    }
+
+
 
     /**
      * 腾讯翻译
@@ -75,15 +92,6 @@ public enum TranslateChannelType {
      */
     public static final String CLOSE_TRANSLATOR = "关闭（只使用自定义翻译）";
 
-    TranslateChannelType(String officialHost, String officialUri, String officialName, String officialApplyUrl) {
-        this.officialHost = officialHost;
-        this.officialUri = officialUri;
-        this.officialName = officialName;
-        this.officialApplyUrl = officialApplyUrl;
-    }
-    public String getTranslateUrl(){
-        return this.officialHost+this.officialUri;
-    }
 
 
 }

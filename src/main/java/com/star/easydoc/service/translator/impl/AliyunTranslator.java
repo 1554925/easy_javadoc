@@ -62,7 +62,7 @@ public class AliyunTranslator extends AbstractTranslator {
         request.setSourceText(text);
         String json = null;
         try {
-            json = sendPost(URL, JSON.toJSONString(request), getConfig().getAccessKeyId(), getConfig().getAccessKeySecret());
+            json = sendPost(URL, JSON.toJSONString(request), getConfig().getAppId(), getConfig().getAppSecret());
             AliyunResponseVO response = JSON.parseObject(json, AliyunResponseVO.class);
             return Objects.requireNonNull(response).getData().getTranslated();
         } catch (Exception e) {

@@ -36,7 +36,7 @@ public class GoogleTranslator extends AbstractTranslator {
     private String translate(String url, String text) {
         String json = null;
         try {
-            json = HttpUtil.get(String.format(url, HttpUtil.encode(text), getConfig().getGoogleKey()), 1000, 3000);
+            json = HttpUtil.get(String.format(url, HttpUtil.encode(text), getConfig().getAppKey()), 1000, 3000);
             JSONObject response = JSON.parseObject(json);
             return Objects.requireNonNull(response).getJSONObject("data").getJSONArray("translations")
                 .getJSONObject(0).getString("translatedText");

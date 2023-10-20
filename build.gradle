@@ -32,7 +32,7 @@ intellij {
     pluginName 'Step Easy Javadoc'
     updateSinceUntilBuild false
 }
-//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
+
 
 dependencies {
     implementation 'com.alibaba.fastjson2:fastjson2:2.0.21'

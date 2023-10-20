@@ -7,7 +7,10 @@ package com.example.cloud.project.integrated.common.domain.channel;
  */
 public interface TranslateChannel {
     boolean isOnlyKey();
-    TranslateChannelType channel();
+    default TranslateChannelType channelType(){
+        return TranslateChannelType.channelType(channelName());
+    }
+    String channelName();
     String getSourceLanguage();
     String getTargetLanguage();
     String getSource();

@@ -54,13 +54,13 @@ public class TranslatorService {
                 return;
             }
             translatorMap = ImmutableMap.<String, Translator>builder()
-                .put(Consts.BAIDU_TRANSLATOR, new BaiduTranslator().init(config))
-                .put(Consts.ALIYUN_TRANSLATOR, new AliyunTranslator().init(config))
-                .put(Consts.TENCENT_TRANSLATOR, new TencentTranslator().init(config))
-                .put(Consts.JINSHAN_TRANSLATOR, new JinshanTranslator().init(config))
-                .put(Consts.YOUDAO_AI_TRANSLATOR, new YoudaoAiTranslator().init(config))
-                .put(Consts.MICROSOFT_TRANSLATOR, new MicrosoftTranslator().init(config))
-                .put(Consts.MICROSOFT_FREE_TRANSLATOR, new MicrosoftFreeTranslator().init(config))
+                .put(Consts.BAIDU_TRANSLATOR, new TranslateRemoteService().init(config))
+                .put(Consts.ALIYUN_TRANSLATOR, new TranslateRemoteService().init(config))
+                .put(Consts.TENCENT_TRANSLATOR, new TranslateRemoteService().init(config))
+                .put(Consts.JINSHAN_TRANSLATOR, new TranslateRemoteService().init(config))
+                .put(Consts.YOUDAO_AI_TRANSLATOR, new TranslateRemoteService().init(config))
+                .put(Consts.MICROSOFT_TRANSLATOR, new TranslateRemoteService().init(config))
+                .put(Consts.MICROSOFT_FREE_TRANSLATOR, new TranslateRemoteService().init(config))
                 .put(Consts.GOOGLE_TRANSLATOR, new GoogleTranslator().init(config))
                 .put(Consts.SIMPLE_SPLITTER, new SimpleSplitterTranslator().init(config))
                 .build();

@@ -11,7 +11,7 @@ import com.example.cloud.project.integrated.common.domain.channel.TranslateChann
 public class YouDaoAiChannel extends TranslateAppIdSecretChannel {
 
     @Override
-    public TranslateChannelType channel() {
-        return TranslateChannelType.YouDaoAi;
+    public String channelName() {
+        return TranslateChannelType.YouDaoAi.getOfficialName();
     }
 }

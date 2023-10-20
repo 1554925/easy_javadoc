@@ -11,7 +11,7 @@ import com.example.cloud.project.integrated.common.domain.channel.TranslateChann
 public class BaiduChannel extends TranslateAppIdSecretChannel {
 
     @Override
-    public TranslateChannelType channel() {
-        return TranslateChannelType.Baidu;
+    public String channelName() {
+        return TranslateChannelType.Baidu.getOfficialName();
     }
 }

@@ -4,10 +4,9 @@ import java.awt.*;
 import java.io.File;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.function.BiConsumer;
 
 import javax.swing.*;
 
@@ -51,35 +50,29 @@ public class CommonSettingsView {
     private JLabel translatorLabel;
     private JButton importButton;
     private JButton exportButton;
+
+    private JLabel appIdLabel;
+    private JLabel appSecretLabel;
+
     private JTextField appIdTextField;
-    private JTextField tokenTextField;
+    private JTextField appSecretTextField;
+
+    private JLabel appKeyLabel;
+    private JTextField appKeyTextField;
+
+
     private JButton resetButton;
     private JButton clearButton;
-    private JLabel appIdLabel;
-    private JLabel tokenLabel;
-    private JTextField secretIdTextField;
-    private JTextField secretKeyTextField;
-    private JLabel secretIdLabel;
-    private JLabel secretKeyLabel;
+
     private JButton starButton;
     private JButton payButton;
-    private JTextField accessKeyIdTextField;
-    private JTextField accessKeySecretTextField;
-    private JLabel accessKeyIdLabel;
-    private JLabel accessKeySecretLabel;
     private JPanel projectPanel;
     private JPanel projectListPanel;
     private JPanel projectWordMapPanel;
     private JButton reviewsButton;
     private JPanel supportPanel;
-    private JTextField youdaoAppKeyTextField;
-    private JTextField youdaoAppSecretTextField;
-    private JLabel youdaoAppKeyLabel;
-    private JLabel youdaoAppSecretLabel;
-    private JTextField microsoftKeyTextField;
-    private JTextField googleKeyTextField;
-    private JLabel microsoftKeyLabel;
-    private JLabel googleKeyLabel;
+    private JTextField proxyUrlText;
+    private JLabel proxyUrlLabel;
     private JBList<Entry<String, String>> typeMapList;
     private JBList<String> projectList;
     private JBList<Entry<String, String>> projectTypeMapList;
@@ -187,161 +180,35 @@ public class CommonSettingsView {
         projectList.addListSelectionListener(e -> refreshProjectWordMap());
     }
 
+
+    private void setVisibleV2(String visible) {
+        BiConsumer<JComponent,Boolean> data = JComponent::setVisible;
+        Arrays.asList(appIdLabel,appIdTextField,appSecretLabel,appSecretTextField,appKeyLabel,appKeyTextField)
+                .forEach(component->{
+                    if(component.getName().startsWith(visible)){
+                        data.accept(component,true);
+                    }else {
+                        data.accept(component,false);
+                    }
+                });
+    }
     private void setVisible(Object selectedItem) {
-        if (Consts.BAIDU_TRANSLATOR.equals(selectedItem)) {
-            appIdLabel.setVisible(true);
-            tokenLabel.setVisible(true);
-            secretIdLabel.setVisible(false);
-            secretKeyLabel.setVisible(false);
-            accessKeyIdLabel.setVisible(false);
-            accessKeySecretLabel.setVisible(false);
-            youdaoAppKeyLabel.setVisible(false);
-            youdaoAppSecretLabel.setVisible(false);
-            microsoftKeyLabel.setVisible(false);
-            googleKeyLabel.setVisible(false);
+        String selectedItemText = (String)selectedItem;
+        switch (selectedItemText){
+            case Consts.BAIDU_TRANSLATOR:
+            case Consts.ALIYUN_TRANSLATOR:
+            case Consts.YOUDAO_AI_TRANSLATOR:
+            case Consts.JINSHAN_TRANSLATOR:
+                setVisibleV2("appId");
+                setVisibleV2("appSecret");
+                break;
+            case Consts.MICROSOFT_TRANSLATOR:
+            case Consts.TENCENT_TRANSLATOR:
+            case Consts.MICROSOFT_FREE_TRANSLATOR:
+            case Consts.GOOGLE_TRANSLATOR:
+                setVisibleV2("appKey");
+                break;
 
-            appIdTextField.setVisible(true);
-            tokenTextField.setVisible(true);
-            secretIdTextField.setVisible(false);
-            secretKeyTextField.setVisible(false);
-            accessKeyIdTextField.setVisible(false);
-            accessKeySecretTextField.setVisible(false);
-            youdaoAppKeyTextField.setVisible(false);
-            youdaoAppSecretTextField.setVisible(false);
-            microsoftKeyTextField.setVisible(false);
-            googleKeyTextField.setVisible(false);
-        } else if (Consts.TENCENT_TRANSLATOR.equals(selectedItem)) {
-            appIdLabel.setVisible(false);
-            tokenLabel.setVisible(false);
-            secretIdLabel.setVisible(true);
-            secretKeyLabel.setVisible(true);
-            accessKeyIdLabel.setVisible(false);
-            accessKeySecretLabel.setVisible(false);
-            youdaoAppKeyLabel.setVisible(false);
-            youdaoAppSecretLabel.setVisible(false);
-            microsoftKeyLabel.setVisible(false);
-            googleKeyLabel.setVisible(false);
-
-            appIdTextField.setVisible(false);
-            tokenTextField.setVisible(false);
-            secretIdTextField.setVisible(true);
-            secretKeyTextField.setVisible(true);
-            accessKeyIdTextField.setVisible(false);
-            accessKeySecretTextField.setVisible(false);
-            youdaoAppKeyTextField.setVisible(false);
-            youdaoAppSecretTextField.setVisible(false);
-            microsoftKeyTextField.setVisible(false);
-            googleKeyTextField.setVisible(false);
-        } else if (Consts.ALIYUN_TRANSLATOR.equals(selectedItem)) {
-            appIdLabel.setVisible(false);
-            tokenLabel.setVisible(false);
-            secretIdLabel.setVisible(false);
-            secretKeyLabel.setVisible(false);
-            accessKeyIdLabel.setVisible(true);
-            accessKeySecretLabel.setVisible(true);
-            youdaoAppKeyLabel.setVisible(false);
-            youdaoAppSecretLabel.setVisible(false);
-            microsoftKeyLabel.setVisible(false);
-            googleKeyLabel.setVisible(false);
-
-            appIdTextField.setVisible(false);
-            tokenTextField.setVisible(false);
-            secretIdTextField.setVisible(false);
-            secretKeyTextField.setVisible(false);
-            accessKeyIdTextField.setVisible(true);
-            accessKeySecretTextField.setVisible(true);
-            youdaoAppKeyTextField.setVisible(false);
-            youdaoAppSecretTextField.setVisible(false);
-            microsoftKeyTextField.setVisible(false);
-            googleKeyTextField.setVisible(false);
-        } else if (Consts.YOUDAO_AI_TRANSLATOR.equals(selectedItem)) {
-            appIdLabel.setVisible(false);
-            tokenLabel.setVisible(false);
-            secretIdLabel.setVisible(false);
-            secretKeyLabel.setVisible(false);
-            accessKeyIdLabel.setVisible(false);
-            accessKeySecretLabel.setVisible(false);
-            youdaoAppKeyLabel.setVisible(true);
-            youdaoAppSecretLabel.setVisible(true);
-            microsoftKeyLabel.setVisible(false);
-            googleKeyLabel.setVisible(false);
-
-            appIdTextField.setVisible(false);
-            tokenTextField.setVisible(false);
-            secretIdTextField.setVisible(false);
-            secretKeyTextField.setVisible(false);
-            accessKeyIdTextField.setVisible(false);
-            accessKeySecretTextField.setVisible(false);
-            youdaoAppKeyTextField.setVisible(true);
-            youdaoAppSecretTextField.setVisible(true);
-            microsoftKeyTextField.setVisible(false);
-            googleKeyTextField.setVisible(false);
-        } else if (Consts.MICROSOFT_TRANSLATOR.equals(selectedItem)) {
-            appIdLabel.setVisible(false);
-            tokenLabel.setVisible(false);
-            secretIdLabel.setVisible(false);
-            secretKeyLabel.setVisible(false);
-            accessKeyIdLabel.setVisible(false);
-            accessKeySecretLabel.setVisible(false);
-            youdaoAppKeyLabel.setVisible(false);
-            youdaoAppSecretLabel.setVisible(false);
-            microsoftKeyLabel.setVisible(true);
-            googleKeyLabel.setVisible(false);
-
-            appIdTextField.setVisible(false);
-            tokenTextField.setVisible(false);
-            secretIdTextField.setVisible(false);
-            secretKeyTextField.setVisible(false);
-            accessKeyIdTextField.setVisible(false);
-            accessKeySecretTextField.setVisible(false);
-            youdaoAppKeyTextField.setVisible(false);
-            youdaoAppSecretTextField.setVisible(false);
-            microsoftKeyTextField.setVisible(true);
-            googleKeyTextField.setVisible(false);
-        } else if (Consts.GOOGLE_TRANSLATOR.equals(selectedItem)) {
-            appIdLabel.setVisible(false);
-            tokenLabel.setVisible(false);
-            secretIdLabel.setVisible(false);
-            secretKeyLabel.setVisible(false);
-            accessKeyIdLabel.setVisible(false);
-            accessKeySecretLabel.setVisible(false);
-            youdaoAppKeyLabel.setVisible(false);
-            youdaoAppSecretLabel.setVisible(false);
-            microsoftKeyLabel.setVisible(false);
-            googleKeyLabel.setVisible(true);
-
-            appIdTextField.setVisible(false);
-            tokenTextField.setVisible(false);
-            secretIdTextField.setVisible(false);
-            secretKeyTextField.setVisible(false);
-            accessKeyIdTextField.setVisible(false);
-            accessKeySecretTextField.setVisible(false);
-            youdaoAppKeyTextField.setVisible(false);
-            youdaoAppSecretTextField.setVisible(false);
-            microsoftKeyTextField.setVisible(false);
-            googleKeyTextField.setVisible(true);
-        } else {
-            appIdLabel.setVisible(false);
-            tokenLabel.setVisible(false);
-            secretIdLabel.setVisible(false);
-            secretKeyLabel.setVisible(false);
-            accessKeyIdLabel.setVisible(false);
-            accessKeySecretLabel.setVisible(false);
-            youdaoAppKeyLabel.setVisible(false);
-            youdaoAppSecretLabel.setVisible(false);
-            microsoftKeyLabel.setVisible(false);
-            googleKeyLabel.setVisible(false);
-
-            appIdTextField.setVisible(false);
-            tokenTextField.setVisible(false);
-            secretIdTextField.setVisible(false);
-            secretKeyTextField.setVisible(false);
-            accessKeyIdTextField.setVisible(false);
-            accessKeySecretTextField.setVisible(false);
-            youdaoAppKeyTextField.setVisible(false);
-            youdaoAppSecretTextField.setVisible(false);
-            microsoftKeyTextField.setVisible(false);
-            googleKeyTextField.setVisible(false);
         }
     }
 
@@ -435,15 +302,10 @@ public class CommonSettingsView {
     public void refresh() {
         setTranslatorBox(config.getTranslator());
         setAppIdTextField(config.getAppId());
-        setTokenTextField(config.getToken());
-        setSecretIdTextField(config.getSecretId());
-        setSecretKeyTextField(config.getSecretKey());
-        setAccessKeyIdTextField(config.getAccessKeyId());
-        setAccessKeySecretTextField(config.getAccessKeySecret());
-        setYoudaoAppKeyTextField(config.getYoudaoAppKey());
-        setYoudaoAppSecretTextField(config.getYoudaoAppSecret());
-        setMicrosoftKeyTextField(config.getMicrosoftKey());
-        setGoogleKeyTextField(config.getGoogleKey());
+        setAppSecretTextField(config.getAppSecret());
+        setAppKeyTextField(config.getAppKey());
+        setProxyUrlText(config.getProxyUrl());
+
         refreshWordMap();
         projectList.clearSelection();
         refreshProjectWordMap();
@@ -502,75 +364,27 @@ public class CommonSettingsView {
         this.appIdTextField.setText(appId);
     }
 
-    public JTextField getTokenTextField() {
-        return tokenTextField;
+    public JTextField getAppSecretTextField() {
+        return appSecretTextField;
     }
 
-    public void setTokenTextField(String token) {
-        this.tokenTextField.setText(token);
+    public void setAppSecretTextField(String token) {
+        this.appSecretTextField.setText(token);
     }
 
-    public JTextField getSecretIdTextField() {
-        return secretIdTextField;
+    public JTextField getAppKeyTextField() {
+        return appKeyTextField;
     }
 
-    public void setSecretIdTextField(String secretId) {
-        this.secretIdTextField.setText(secretId);
+    public void setAppKeyTextField(String secretKey) {
+        this.appKeyTextField.setText(secretKey);
+    }
+    public void setProxyUrlText(String proxyUrlText) {
+        this.proxyUrlText.setText(proxyUrlText);
     }
 
-    public JTextField getSecretKeyTextField() {
-        return secretKeyTextField;
+    public JTextField getProxyUrlText() {
+        return proxyUrlText;
     }
 
-    public void setSecretKeyTextField(String secretKey) {
-        this.secretKeyTextField.setText(secretKey);
-    }
-
-    public JTextField getAccessKeyIdTextField() {
-        return accessKeyIdTextField;
-    }
-
-    public void setAccessKeyIdTextField(String accessKeyId) {
-        this.accessKeyIdTextField.setText(accessKeyId);
-    }
-
-    public JTextField getAccessKeySecretTextField() {
-        return accessKeySecretTextField;
-    }
-
-    public void setAccessKeySecretTextField(String accessKeySecret) {
-        this.accessKeySecretTextField.setText(accessKeySecret);
-    }
-
-    public JTextField getYoudaoAppKeyTextField() {
-        return youdaoAppKeyTextField;
-    }
-
-    public JTextField getYoudaoAppSecretTextField() {
-        return youdaoAppSecretTextField;
-    }
-
-    public void setYoudaoAppKeyTextField(String youdaoAppKey) {
-        this.youdaoAppKeyTextField.setText(youdaoAppKey);
-    }
-
-    public void setYoudaoAppSecretTextField(String youdaoAppSecret) {
-        this.youdaoAppSecretTextField.setText(youdaoAppSecret);
-    }
-
-    public JTextField getMicrosoftKeyTextField() {
-        return microsoftKeyTextField;
-    }
-
-    public void setMicrosoftKeyTextField(String microsoftKey) {
-        this.microsoftKeyTextField.setText(microsoftKey);
-    }
-
-    public JTextField getGoogleKeyTextField() {
-        return googleKeyTextField;
-    }
-
-    public void setGoogleKeyTextField(String googleKey) {
-        this.googleKeyTextField.setText(googleKey);
-    }
 }
