@@ -2,13 +2,10 @@ package com.example.cloud.project.integrated.translate.service.impl;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
-import com.example.cloud.project.integrated.common.domain.channel.TranslateAppIdSecretChannel;
-import com.example.cloud.project.integrated.common.domain.channel.TranslateAppKeyChannel;
-import com.example.cloud.project.integrated.common.domain.channel.TranslateChannelType;
-import com.example.cloud.project.integrated.common.domain.channel.TranslateResponse;
+import com.example.cloud.project.integrated.common.domain.RemoteTranslateRequest;
+import com.example.cloud.project.integrated.common.domain.TranslateResponse;
 import com.example.cloud.project.integrated.common.utils.HttpUtils;
-import com.example.cloud.project.integrated.translate.service.AppIdSecretTranslator;
-import com.example.cloud.project.integrated.translate.service.AppKeyTranslator;
+import com.example.cloud.project.integrated.translate.service.Translator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -23,7 +20,7 @@ import java.util.Objects;
  */
 @Slf4j
 @Service("Google")
-public class GoogleTranslator implements AppKeyTranslator {
+public class GoogleTranslator implements Translator {
 
     private static final String EN2CH_URL
         = "https://translation.googleapis.com/language/translate/v2?q=%s&source=en&target=zh&key=%s&format=text";
@@ -31,21 +28,21 @@ public class GoogleTranslator implements AppKeyTranslator {
         = "https://translation.googleapis.com/language/translate/v2?q=%s&source=zh&target=en&key=%s&format=text";
 
     @Override
-    public TranslateResponse en2Ch(TranslateAppKeyChannel channel) {
-        return translate(EN2CH_URL, channel);
+    public TranslateResponse en2Ch(RemoteTranslateRequest request) {
+        return translate(EN2CH_URL, request);
     }
 
     @Override
-    public TranslateResponse ch2En(TranslateAppKeyChannel channel) {
-        return translate(CH2EN_URL, channel);
+    public TranslateResponse ch2En(RemoteTranslateRequest request) {
+        return translate(CH2EN_URL, request);
     }
 
-    private TranslateResponse translate(String url, TranslateAppKeyChannel channel) {
+    private TranslateResponse translate(String url, RemoteTranslateRequest request) {
         String json = null;
         String translatedText;
         try {
-            json = HttpUtils.get(String.format(url, HttpUtils.encode(channel.getText()),
-                    channel.getAppKey()), 1000, 3000);
+            json = HttpUtils.get(String.format(url, HttpUtils.encode(request.getText()),
+                    request.getAppKey()), 1000, 3000);
             JSONObject response = JSON.parseObject(json);
             translatedText = Objects.requireNonNull(response).getJSONObject("data").getJSONArray("translations")
                 .getJSONObject(0).getString("translatedText");

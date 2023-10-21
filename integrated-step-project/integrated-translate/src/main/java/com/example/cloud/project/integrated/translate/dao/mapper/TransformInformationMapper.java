@@ -1,7 +1,7 @@
 package com.example.cloud.project.integrated.translate.dao.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.example.cloud.project.integrated.common.domain.channel.TranslateResponse;
+import com.example.cloud.project.integrated.common.domain.TranslateResponse;
 import com.example.cloud.project.integrated.translate.dao.entity.TransformInformation;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;

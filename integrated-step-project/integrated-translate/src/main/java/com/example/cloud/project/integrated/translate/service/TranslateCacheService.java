@@ -1,14 +1,15 @@
 package com.example.cloud.project.integrated.translate.service;
 
-import com.example.cloud.project.integrated.common.domain.channel.TranslateChannel;
-import com.example.cloud.project.integrated.common.domain.channel.TranslateResponse;
-import com.example.cloud.project.integrated.common.utils.ObjUtils;
+import com.example.cloud.project.integrated.common.domain.TranslateResponse;
+import com.example.cloud.project.integrated.common.utils.Md5CryptUtils;
+import com.example.cloud.project.integrated.common.domain.RemoteTranslateRequest;
 import org.redisson.api.RMap;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author gys
@@ -30,17 +31,16 @@ public class TranslateCacheService {
         cacheMap = redisson.getMap(PREFIX+CACHE);
     }
 
-    public TranslateResponse getCache(TranslateChannel translateChannel) {
-        String source = translateChannel.getSource();
+    public TranslateResponse getCache(RemoteTranslateRequest request) {
+        String source = request.getSource();
         return cacheMap.get(source);
     }
 
-    public void saveCache(TranslateChannel translateChannel,TranslateResponse response) {
+    public void saveCache(RemoteTranslateRequest request, TranslateResponse response) {
         if(response!=null){
-            String source = translateChannel.getSource();
-            cacheMap.put(source,response);
+            String source = request.getSource();
+            cacheMap.put(Md5CryptUtils.md5(source.getBytes(StandardCharsets.UTF_8)),response);
         }
-
     }
 
 }

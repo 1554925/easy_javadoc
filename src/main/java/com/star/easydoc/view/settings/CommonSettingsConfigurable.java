@@ -72,7 +72,7 @@ public class CommonSettingsConfigurable implements Configurable {
             config.setProjectWordMap(Maps.newTreeMap());
         }
 
-        if (config.getTranslator() == null || !Consts.ENABLE_TRANSLATOR_SET.contains(config.getTranslator())) {
+        if (config.getTranslator() == null || !Consts.ENABLE_ZH_NAME_SET.contains(config.getTranslator())) {
             throw new ConfigurationException("请选择正确的翻译方式");
         }
         if (StringUtils.isBlank(config.getProxyUrl())) {

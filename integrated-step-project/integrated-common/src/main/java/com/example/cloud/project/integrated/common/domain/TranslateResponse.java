@@ -1,4 +1,4 @@
-package com.example.cloud.project.integrated.common.domain.channel;
+package com.example.cloud.project.integrated.common.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,16 +19,10 @@ public class TranslateResponse {
     private String wordLength;
 
     public static TranslateResponse of(String text) {
-        return TranslateResponse.builder()
-                .target(text)
-                .wordLength(String.valueOf(text.length()))
-                .build();
+        return new TranslateResponse(text,String.valueOf(text.length()));
     }
     public static TranslateResponse of(String text,String wordLength) {
-        return TranslateResponse.builder()
-                .target(text)
-                .wordLength(wordLength)
-                .build();
+        return new TranslateResponse(text,wordLength);
     }
 
 }

@@ -2,10 +2,10 @@ package com.example.cloud.project.integrated.translate.service.impl;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.annotation.JSONField;
-import com.example.cloud.project.integrated.common.domain.channel.TranslateAppKeyChannel;
-import com.example.cloud.project.integrated.common.domain.channel.TranslateResponse;
+import com.example.cloud.project.integrated.common.domain.RemoteTranslateRequest;
+import com.example.cloud.project.integrated.common.domain.TranslateResponse;
 import com.example.cloud.project.integrated.common.utils.HttpUtils;
-import com.example.cloud.project.integrated.translate.service.AppKeyTranslator;
+import com.example.cloud.project.integrated.translate.service.Translator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -27,23 +27,23 @@ import java.util.TreeMap;
  */
 @Slf4j
 @Service("Tencent")
-public class TencentTranslator implements AppKeyTranslator {
+public class TencentTranslator implements Translator {
 
     @Override
-    public TranslateResponse en2Ch(TranslateAppKeyChannel appKeyChannel) {
-        TencentResponse response = get(appKeyChannel, "zh");
+    public TranslateResponse en2Ch(RemoteTranslateRequest request) {
+        TencentResponse response = get(request, "zh");
         return TranslateResponse.of(response == null ? StringUtils.EMPTY : response.getTargetText());
     }
 
     @Override
-    public TranslateResponse ch2En(TranslateAppKeyChannel appKeyChannel) {
-        TencentResponse response = get(appKeyChannel, "en");
+    public TranslateResponse ch2En(RemoteTranslateRequest request) {
+        TencentResponse response = get(request, "en");
         return TranslateResponse.of(response == null ? StringUtils.EMPTY : response.getTargetText());
     }
 
 
 
-    private TencentResponse get(TranslateAppKeyChannel channel, String target) {
+    private TencentResponse get(RemoteTranslateRequest request, String target) {
         TencentResponse response = null;
         String json = null;
         try {
@@ -52,16 +52,16 @@ public class TencentTranslator implements AppKeyTranslator {
                 params.put("Nonce", new SecureRandom().nextInt(Integer.MAX_VALUE));
                 params.put("Timestamp", System.currentTimeMillis() / 1000);
                 params.put("Region", "ap-beijing");
-                params.put("SecretId", channel.getAppKey());
+                params.put("SecretId", request.getAppKey());
                 params.put("Action", "TextTranslate");
                 params.put("Version", "2018-03-21");
-                params.put("SourceText", channel.getText());
+                params.put("SourceText", request.getText());
                 params.put("Source", "auto");
                 params.put("Target", target);
                 params.put("ProjectId", 0);
 
                 String str2sign = getStringToSign("GET", "tmt.tencentcloudapi.com", params);
-                String signature = sign(str2sign, channel.getAppKey(), "HmacSHA1");
+                String signature = sign(str2sign, request.getAppKey(), "HmacSHA1");
                 params.put("Signature", signature);
                 json = HttpUtils.get("https://tmt.tencentcloudapi.com", params);
                 TencentResult result = JSON.parseObject(json, TencentResult.class);

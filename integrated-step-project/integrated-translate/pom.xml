@@ -17,7 +17,7 @@
         <dependency>
             <groupId>com.example.cloud.project</groupId>
             <artifactId>integrated-common</artifactId>
-            <version>1.0.3-SNAPSHOT</version>
+            <version>1.0.5-SNAPSHOT</version>
         </dependency>
 
         <dependency>

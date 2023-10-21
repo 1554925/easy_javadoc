@@ -2,10 +2,11 @@ package com.example.cloud.project.integrated.translate.service.impl;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.annotation.JSONField;
-import com.example.cloud.project.integrated.common.domain.channel.TranslateAppIdSecretChannel;
-import com.example.cloud.project.integrated.common.domain.channel.TranslateResponse;
+import com.example.cloud.project.integrated.common.domain.RemoteTranslateRequest;
+import com.example.cloud.project.integrated.common.domain.TranslateChannelType;
+import com.example.cloud.project.integrated.common.domain.TranslateResponse;
 import com.example.cloud.project.integrated.common.utils.HttpUtils;
-import com.example.cloud.project.integrated.translate.service.AppIdSecretTranslator;
+import com.example.cloud.project.integrated.translate.service.Translator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Service;
@@ -26,32 +27,36 @@ import java.util.*;
  * @date 2019/09/01
  */
 @Slf4j
-@Service("Aliyun")
-public class AliyunTranslator implements AppIdSecretTranslator {
+@Service(TranslateChannelType.CLOSE_ZH_NAME)
+public class AliyunTranslator implements Translator {
+    private static final String TRANSLATE_URL = "http://api.fanyi.baidu.com/api/trans/vip/translate?from=auto&to=auto&appid=%s&salt=%s&sign=%s&q=%s";
 
     @Override
-    public TranslateResponse en2Ch(TranslateAppIdSecretChannel translateChannel) {
-        return translate(translateChannel);
+    public TranslateResponse en2Ch(RemoteTranslateRequest request) {
+        request.setFrom("en");
+        request.setTo("zh");
+        return translate(request);
     }
 
     @Override
-    public TranslateResponse ch2En(TranslateAppIdSecretChannel translateChannel) {
-        return translate(translateChannel);
+    public TranslateResponse ch2En(RemoteTranslateRequest request) {
+        request.setFrom("zh");
+        request.setTo("en");
+        return translate(request);
     }
 
     /**
      * 翻译
      * @return {@link TranslateResponse}
      */
-    public TranslateResponse translate(TranslateAppIdSecretChannel translate) {
-        AliyunRequestVO request = new AliyunRequestVO();
-        request.setSourceLanguage(translate.getSourceLanguage());
-        request.setTargetLanguage(translate.getTargetLanguage());
-        request.setSourceText(translate.getText());
+    public TranslateResponse translate(RemoteTranslateRequest request) {
+        AliyunRequestVO aliyunRequestVO = new AliyunRequestVO();
+        aliyunRequestVO.setSourceLanguage(request.getFrom());
+        aliyunRequestVO.setTargetLanguage(request.getTo());
+        aliyunRequestVO.setSourceText(request.getText());
         String json = null;
         try {
-            String url = translate.channelType().getTranslateUrl();
-            json = sendPost(url, JSON.toJSONString(request),translate.getAppId(), translate.getAppSecret());
+            json = sendPost(TRANSLATE_URL, JSON.toJSONString(aliyunRequestVO),request.getAppId(), request.getAppSecret());
             AliyunResponseVO responseVO = JSON.parseObject(json, AliyunResponseVO.class);
             AliyunResponseDataVO data =  Objects.requireNonNull(responseVO).getData();
             return TranslateResponse.of(data.getTranslated(),data.getWordCount());

@@ -2,10 +2,10 @@ package com.example.cloud.project.integrated.translate.service.impl;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.annotation.JSONField;
-import com.example.cloud.project.integrated.common.domain.channel.TranslateAppIdSecretChannel;
-import com.example.cloud.project.integrated.common.domain.channel.TranslateResponse;
+import com.example.cloud.project.integrated.common.domain.RemoteTranslateRequest;
+import com.example.cloud.project.integrated.common.domain.TranslateResponse;
 import com.example.cloud.project.integrated.common.utils.HttpUtils;
-import com.example.cloud.project.integrated.translate.service.AppIdSecretTranslator;
+import com.example.cloud.project.integrated.translate.service.Translator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -21,15 +21,15 @@ import java.util.Objects;
  */
 @Slf4j
 @Service("JinShan")
-public class JinShanTranslator implements AppIdSecretTranslator {
+public class JinShanTranslator implements Translator {
 
     private static final String URL = "http://dict-co.iciba.com/api/dictionary.php?key=1E55091D2F202FA617472001B3AF0D39&type=json&w=%s";
 
     @Override
-    public TranslateResponse en2Ch(TranslateAppIdSecretChannel channel) {
+    public TranslateResponse en2Ch(RemoteTranslateRequest request) {
         String text ;
         try {
-            JinshanResponse response = JSON.parseObject(HttpUtils.get(String.format(URL, HttpUtils.encode(channel.getText()))), JinshanResponse.class);
+            JinshanResponse response = JSON.parseObject(HttpUtils.get(String.format(URL, HttpUtils.encode(request.getText()))), JinshanResponse.class);
             text = Objects.requireNonNull(response).getSymbols().get(0).getParts().get(0).getMeans().get(0);
         } catch (Exception ignore) {
             text = StringUtils.EMPTY;
@@ -38,7 +38,7 @@ public class JinShanTranslator implements AppIdSecretTranslator {
     }
 
     @Override
-    public TranslateResponse ch2En(TranslateAppIdSecretChannel channel) {
+    public TranslateResponse ch2En(RemoteTranslateRequest request) {
         // TODO: 2020-8-27
         return null;
     }

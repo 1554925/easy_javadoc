@@ -2,10 +2,10 @@ package com.example.cloud.project.integrated.translate.service.impl;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.annotation.JSONField;
-import com.example.cloud.project.integrated.common.domain.channel.TranslateAppIdSecretChannel;
-import com.example.cloud.project.integrated.common.domain.channel.TranslateResponse;
+import com.example.cloud.project.integrated.common.domain.RemoteTranslateRequest;
+import com.example.cloud.project.integrated.common.domain.TranslateResponse;
 import com.example.cloud.project.integrated.common.utils.HttpUtils;
-import com.example.cloud.project.integrated.translate.service.AppIdSecretTranslator;
+import com.example.cloud.project.integrated.translate.service.Translator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -23,32 +23,32 @@ import java.util.Objects;
  */
 @Slf4j
 @Service("Baidu")
-public class BaiduTranslator implements AppIdSecretTranslator {
+public class BaiduTranslator implements Translator {
     private static final Logger LOGGER = log;
-
+    private static final String TRANSLATE_URL = "http://mt.cn-hangzhou.aliyuncs.com/api/translate/web/ecommerce";
     @Override
-    public TranslateResponse en2Ch(TranslateAppIdSecretChannel appIdSecretChannel) {
-        return translate(appIdSecretChannel);
+    public TranslateResponse en2Ch(RemoteTranslateRequest request) {
+        return translate(request);
     }
 
     @Override
-    public TranslateResponse ch2En(TranslateAppIdSecretChannel appIdSecretChannel) {
-        return translate(appIdSecretChannel);
+    public TranslateResponse ch2En(RemoteTranslateRequest request) {
+        return translate(request);
     }
 
-    private TranslateResponse translate(TranslateAppIdSecretChannel channel) {
+    private TranslateResponse translate(RemoteTranslateRequest request) {
         String json = null;
         TransResult result = null;
         try {
-            String text = channel.getText();
-            String appId = channel.getAppId();
-            String secret = channel.getAppSecret();
+            String text = request.getText();
+            String appId = request.getAppId();
+            String secret = request.getAppSecret();
 
             for (int i = 0; i < 10; i++) {
                 String salt = RandomStringUtils.randomNumeric(16);
                 String sign = DigestUtils.md5Hex(appId + text + salt + secret);
                 String eText = HttpUtils.encode(text);
-                json = HttpUtils.get(String.format(channel.channelType().getTranslateUrl(), appId, salt, sign, eText));
+                json = HttpUtils.get(String.format(TRANSLATE_URL , appId, salt, sign, eText));
                 BaiduResponse response = JSON.parseObject(json, BaiduResponse.class);
                 if (response == null || "54003".equals(response.getErrorCode())) {
                     Thread.sleep(500);

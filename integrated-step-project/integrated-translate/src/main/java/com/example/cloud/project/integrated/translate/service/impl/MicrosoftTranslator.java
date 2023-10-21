@@ -3,10 +3,10 @@ package com.example.cloud.project.integrated.translate.service.impl;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
-import com.example.cloud.project.integrated.common.domain.channel.TranslateAppKeyChannel;
-import com.example.cloud.project.integrated.common.domain.channel.TranslateResponse;
+import com.example.cloud.project.integrated.common.domain.RemoteTranslateRequest;
+import com.example.cloud.project.integrated.common.domain.TranslateResponse;
 import com.example.cloud.project.integrated.common.utils.HttpUtils;
-import com.example.cloud.project.integrated.translate.service.AppKeyTranslator;
+import com.example.cloud.project.integrated.translate.service.Translator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -23,33 +23,34 @@ import java.util.Objects;
  */
 @Slf4j
 @Service("Microsoft")
-public class MicrosoftTranslator implements AppKeyTranslator {
+public class MicrosoftTranslator implements Translator {
 
-    private static final String EN2CH_URL
-        = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&textType=plain&from=en&to=zh-Hans";
-    private static final String CH2EN_URL
-        = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&textType=plain&from=zh-Hans&to=en";
-
+    private static final String TRANSLATE_URL = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&textType=plain&from=#from#&to=#to#";
 
     @Override
-    public TranslateResponse en2Ch(TranslateAppKeyChannel appKeyChannel) {
-        return translate(EN2CH_URL, appKeyChannel);
+    public TranslateResponse en2Ch(RemoteTranslateRequest request) {
+        request.setFrom("en");
+        request.setTo("zh-Hans");
+        return translate(request);
     }
 
     @Override
-    public TranslateResponse ch2En(TranslateAppKeyChannel appKeyChannel) {
-        return translate(CH2EN_URL, appKeyChannel);
+    public TranslateResponse ch2En(RemoteTranslateRequest request) {
+        request.setFrom("zh-Hans");
+        request.setTo("en");
+        return translate(request);
     }
 
-    private TranslateResponse translate(String url, TranslateAppKeyChannel appKeyChannel) {
+    private TranslateResponse translate(RemoteTranslateRequest request) {
         String result;
         try {
+            String url = TRANSLATE_URL.replace("#from#", request.getFrom()).replace("#to#", request.getTo());
             JSONObject textObject = new JSONObject();
-            textObject.put("Text", appKeyChannel.getText());
+            textObject.put("Text", request.getText());
             JSONArray body = new JSONArray();
             body.add(textObject);
             Map<String, String> headers = new HashMap<>();
-            headers.put("Ocp-Apim-Subscription-Key", appKeyChannel.getAppKey());
+            headers.put("Ocp-Apim-Subscription-Key", request.getAppKey());
             String json = HttpUtils.postJson(url, headers, JSON.toJSONString(body));
             JSONArray response = JSON.parseArray(json);
             result = Objects.requireNonNull(response).getJSONObject(0).getJSONArray("translations").getJSONObject(0).getString("text");

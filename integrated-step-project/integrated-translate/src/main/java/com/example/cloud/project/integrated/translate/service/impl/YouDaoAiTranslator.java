@@ -1,10 +1,10 @@
 package com.example.cloud.project.integrated.translate.service.impl;
 
 import com.alibaba.fastjson2.JSON;
-import com.example.cloud.project.integrated.common.domain.channel.TranslateAppIdSecretChannel;
-import com.example.cloud.project.integrated.common.domain.channel.TranslateResponse;
+import com.example.cloud.project.integrated.common.domain.RemoteTranslateRequest;
+import com.example.cloud.project.integrated.common.domain.TranslateResponse;
 import com.example.cloud.project.integrated.common.utils.HttpUtils;
-import com.example.cloud.project.integrated.translate.service.AppIdSecretTranslator;
+import com.example.cloud.project.integrated.translate.service.Translator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -25,22 +25,22 @@ import java.util.Objects;
  */
 @Slf4j
 @Service("YouDaoAi")
-public class YouDaoAiTranslator implements AppIdSecretTranslator {
+public class YouDaoAiTranslator implements Translator {
 
     private static final String YOUDAO_URL = "https://openapi.youdao.com/api";
 
 
     @Override
-    public TranslateResponse en2Ch(TranslateAppIdSecretChannel appIdSecretChannel) {
-        return TranslateResponse.of(translate(appIdSecretChannel, "en", "zh-CHS"));
+    public TranslateResponse en2Ch(RemoteTranslateRequest request) {
+        return TranslateResponse.of(translate(request, "en", "zh-CHS"));
     }
 
     @Override
-    public TranslateResponse ch2En(TranslateAppIdSecretChannel appIdSecretChannel) {
-        return TranslateResponse.of(translate(appIdSecretChannel, "zh-CHS", "en"));
+    public TranslateResponse ch2En(RemoteTranslateRequest request) {
+        return TranslateResponse.of(translate(request, "zh-CHS", "en"));
     }
 
-    private String translate(TranslateAppIdSecretChannel channel, String from, String to) {
+    private String translate(RemoteTranslateRequest request, String from, String to) {
         Map<String, Object> params = new HashMap<>();
         String salt = String.valueOf(System.currentTimeMillis());
         params.put("from", from);
@@ -48,10 +48,10 @@ public class YouDaoAiTranslator implements AppIdSecretTranslator {
         params.put("signType", "v3");
         String curtime = String.valueOf(System.currentTimeMillis() / 1000);
         params.put("curtime", curtime);
-        String signStr = channel.getAppId() + truncate(channel.getText()) + salt + curtime + channel.getAppSecret();
+        String signStr = request.getAppId() + truncate(request.getText()) + salt + curtime + request.getAppSecret();
         String sign = getDigest(signStr);
-        params.put("appKey", channel.getAppId());
-        params.put("q", channel);
+        params.put("appKey", request.getAppId());
+        params.put("q", request);
         params.put("salt", salt);
         params.put("sign", sign);
         String json = null;

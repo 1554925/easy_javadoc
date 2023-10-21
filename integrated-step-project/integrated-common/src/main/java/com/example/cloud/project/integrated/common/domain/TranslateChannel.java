@@ -1,4 +1,4 @@
-package com.example.cloud.project.integrated.common.domain.channel;
+package com.example.cloud.project.integrated.common.domain;
 
 /**
  * @author gys

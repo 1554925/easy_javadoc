@@ -1,9 +1,7 @@
 package com.example.cloud.project.integrated.translate.service;
 
-import com.example.cloud.project.integrated.common.domain.channel.TranslateAppIdSecretChannel;
-import com.example.cloud.project.integrated.common.domain.channel.TranslateAppKeyChannel;
-import com.example.cloud.project.integrated.common.domain.channel.TranslateChannel;
-import com.example.cloud.project.integrated.common.domain.channel.TranslateResponse;
+import com.example.cloud.project.integrated.common.domain.RemoteTranslateRequest;
+import com.example.cloud.project.integrated.common.domain.TranslateResponse;
 
 /**
  * @author gys
@@ -17,18 +15,7 @@ public interface Translator {
      *
      * @return {@link TranslateResponse}
      */
-    default TranslateResponse en2Ch(TranslateChannel translateChannel){
-        if(translateChannel.isOnlyKey()){
-            TranslateAppKeyChannel channel = (TranslateAppKeyChannel)translateChannel;
-            AppIdSecretTranslator translator = (AppIdSecretTranslator)this;
-            return translator.en2Ch(channel);
-        }else {
-            TranslateAppIdSecretChannel channel = (TranslateAppIdSecretChannel)translateChannel;
-            AppKeyTranslator translator = (AppKeyTranslator)this;
-            return translator.en2Ch(channel);
-        }
-
-    }
+    TranslateResponse en2Ch(RemoteTranslateRequest request);
 
 
     /**
@@ -36,15 +23,5 @@ public interface Translator {
      *
      * @return {@link TranslateResponse}
      */
-    default TranslateResponse ch2En(TranslateChannel translateChannel){
-        if(translateChannel.isOnlyKey()){
-            TranslateAppKeyChannel channel = (TranslateAppKeyChannel)translateChannel;
-            AppIdSecretTranslator translator = (AppIdSecretTranslator)this;
-            return translator.ch2En(channel);
-        }else {
-            TranslateAppIdSecretChannel channel = (TranslateAppIdSecretChannel)translateChannel;
-            AppKeyTranslator translator = (AppKeyTranslator)this;
-            return translator.ch2En(channel);
-        }
-    }
+    TranslateResponse ch2En(RemoteTranslateRequest translateChannel);
 }

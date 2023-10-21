@@ -2,8 +2,9 @@ package com.star.easydoc.service.translator;
 
 import com.alibaba.fastjson.JSON;
 import com.example.cloud.project.integrated.common.domain.R;
-import com.example.cloud.project.integrated.common.domain.channel.*;
-import com.example.cloud.project.integrated.common.domain.channel.impl.AliyunChannel;
+import com.example.cloud.project.integrated.common.domain.RemoteTranslateRequest;
+import com.example.cloud.project.integrated.common.domain.TranslateChannelType;
+import com.example.cloud.project.integrated.common.domain.TranslateResponse;
 import com.example.cloud.project.integrated.common.utils.ObjUtils;
 import com.star.easydoc.common.util.HttpUtil;
 import com.star.easydoc.config.EasyDocConfig;
@@ -20,18 +21,17 @@ import java.util.Map;
  */
 @Slf4j
 public class TranslateRemoteService implements Translator{
-    private TranslateChannel translateChannel;
     private EasyDocConfig easyDocConfig;
     private final static String accept = "application/json";
     private final static String contentType = "application/json;charset=utf-8";
 
-    private String sendPost(TranslateChannel translateChannel) {
+    private String sendPost(RemoteTranslateRequest request) {
         try{
             Map<String, String> headers = new HashMap<>();
             // 设置通用的请求属性
             headers.put("Accept", accept);
             headers.put("Content-Type", contentType);
-            String body = JSON.toJSONString(translateChannel);
+            String body = JSON.toJSONString(request);
             String responseStr =  HttpUtil.post(easyDocConfig.getProxyUrl(),headers,body);
             R<TranslateResponse> responseR = (R<TranslateResponse>)ObjUtils.copy(responseStr,R.class);
             if(responseR.isSuccess()){
@@ -54,25 +54,21 @@ public class TranslateRemoteService implements Translator{
 
     private String translate(String text,String sourceLun,String targetLun) {
         try{
-            TranslateChannel translateChannel = TranslateFactory.channelFactory(easyDocConfig.getTranslator());
-            if(translateChannel instanceof AbstractTranslateChannel){
-                AbstractTranslateChannel absTranslate = (AbstractTranslateChannel) translateChannel;
-                absTranslate.setSource(text);
-                absTranslate.setSourceLanguage(sourceLun);
-                absTranslate.setTargetLanguage(targetLun);
-                absTranslate.setChannelName(easyDocConfig.getTranslator());
-                if(absTranslate.isOnlyKey()){
-                    TranslateAppKeyChannel appKeyChannel = (TranslateAppKeyChannel)absTranslate;
-                    appKeyChannel.setAppKey(easyDocConfig.getAppKey());
-                }else {
-                    TranslateAppIdSecretChannel appIdSecretChannel = (TranslateAppIdSecretChannel)absTranslate;
-                    appIdSecretChannel.setAppSecret(easyDocConfig.getAppSecret());
-                    appIdSecretChannel.setAppId(easyDocConfig.getAppId());
-                }
-                return sendPost(translateChannel);
+            TranslateChannelType type = TranslateChannelType.channelType(easyDocConfig.getTranslator());
+            if(!type.isEmpty()){
+                RemoteTranslateRequest request = new RemoteTranslateRequest();
+                request.setFrom(sourceLun);
+                request.setTo(targetLun);
+                request.setChannelName(easyDocConfig.getTranslator());
+                request.setSource(text);
+                request.setAppId(easyDocConfig.getAppId());
+                request.setAppKey(easyDocConfig.getAppKey());
+                request.setAppSecret(easyDocConfig.getAppSecret());
+                return sendPost(request);
             }
         }catch (Exception e){
-            throw new RuntimeException(e);
+            log.error("远程请求异常：",e);
+            throw new RuntimeException("远程请求异常："+e.getMessage());
         }
         throw new RuntimeException("请求参数为空");
     }
