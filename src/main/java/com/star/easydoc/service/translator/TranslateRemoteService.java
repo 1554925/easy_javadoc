@@ -8,8 +8,9 @@ import com.example.cloud.project.integrated.common.domain.TranslateResponse;
 import com.example.cloud.project.integrated.common.utils.ObjUtils;
 import com.star.easydoc.common.util.HttpUtil;
 import com.star.easydoc.config.EasyDocConfig;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,8 +20,8 @@ import java.util.Map;
  * @date 2023/10/19
  * @description
  */
-@Slf4j
 public class TranslateRemoteService implements Translator{
+    Logger log = LoggerFactory.getLogger(TranslateRemoteService.class);
     private EasyDocConfig easyDocConfig;
     private final static String accept = "application/json";
     private final static String contentType = "application/json;charset=utf-8";
