@@ -2,7 +2,7 @@ package com.star.easydoc.config;
 
 import java.util.Objects;
 
-import com.example.cloud.project.integrated.common.domain.channel.TranslateChannelType;
+import com.example.cloud.project.integrated.common.domain.TranslateChannelType;
 import com.google.common.collect.Maps;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
