@@ -26,7 +26,6 @@ public class EasyDocConfigComponent implements PersistentStateComponent<EasyDocC
     @Override
     public EasyDocConfig getState() {
         try{
-            System.out.println(TranslateChannelType.Aliyun.getOfficialName());
             if (config == null) {
                 config = new EasyDocConfig();
                 config.setAuthor(System.getProperty("user.name"));

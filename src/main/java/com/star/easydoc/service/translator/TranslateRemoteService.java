@@ -26,6 +26,7 @@ public class TranslateRemoteService implements Translator{
     private final static String accept = "application/json";
     private final static String contentType = "application/json;charset=utf-8";
 
+
     private String sendPost(RemoteTranslateRequest request) {
         try{
             Map<String, String> headers = new HashMap<>();
@@ -34,9 +35,13 @@ public class TranslateRemoteService implements Translator{
             headers.put("Content-Type", contentType);
             String body = JSON.toJSONString(request);
             String responseStr =  HttpUtil.post(easyDocConfig.getProxyUrl(),headers,body);
-            R<TranslateResponse> responseR = (R<TranslateResponse>)ObjUtils.copy(responseStr,R.class);
+            R<?> responseR = ObjUtils.copy(responseStr,R.class);
+
             if(responseR.isSuccess()){
-                return responseR.getData().getTarget();
+                Object data = responseR.getData();
+                if (data instanceof TranslateResponse){
+                    return ((TranslateResponse)data).getTarget();
+                }
             }
         }catch (Exception e){
             log.error("远程参数请求错误",e);

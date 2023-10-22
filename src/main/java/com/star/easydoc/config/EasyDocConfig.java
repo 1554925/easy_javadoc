@@ -3,9 +3,7 @@ package com.star.easydoc.config;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
-
 import com.alibaba.fastjson2.annotation.JSONField;
-
 import com.google.common.collect.Maps;
 import com.intellij.ide.DataManager;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -393,16 +391,23 @@ public class EasyDocConfig {
         if (wordMap != null) {
             map.putAll(wordMap);
         }
-        Project project = DataManager.getInstance()
-                .getDataContextFromFocus()
-                .getResultSync()
-                .getData(CommonDataKeys.PROJECT);
-        if (project != null) {
+//        Project project = DataManager.getInstance()
+//                .getDataContextFromFocus()
+//                .getResultSync()
+//                .getData(CommonDataKeys.PROJECT);
+//        if (project != null) {
+//            Map<String, String> projectMap = projectWordMap.get(project.getName());
+//            if (projectMap != null) {
+//                map.putAll(projectMap);
+//            }
+//        }
+        DataManager.getInstance()
+                .getDataContextFromFocusAsync().onSuccess((dataContext)->{
+            Project project = dataContext.getData(CommonDataKeys.PROJECT);
             Map<String, String> projectMap = projectWordMap.get(project.getName());
             if (projectMap != null) {
                 map.putAll(projectMap);
-            }
-        }
+            }});
         return map;
     }
 
