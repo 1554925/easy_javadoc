@@ -5,6 +5,7 @@ import java.io.File;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.function.BiConsumer;
 
@@ -180,17 +181,19 @@ public class CommonSettingsView {
         projectList.addListSelectionListener(e -> refreshProjectWordMap());
     }
 
-
     private void setVisibleV2(String visible) {
+        Map<String, List<JComponent>> jComponentMap = new HashMap<String, List<JComponent>>(){{
+            put("appId",Arrays.asList(appIdLabel,appIdTextField,appSecretLabel,appSecretTextField));
+            put("appKey",Arrays.asList(appKeyLabel,appKeyTextField));
+        }};
         BiConsumer<JComponent,Boolean> data = JComponent::setVisible;
-        Arrays.asList(appIdLabel,appIdTextField,appSecretLabel,appSecretTextField,appKeyLabel,appKeyTextField)
-                .forEach(component->{
-                    if(component.getName().startsWith(visible)){
-                        data.accept(component,true);
-                    }else {
-                        data.accept(component,false);
-                    }
-                });
+        jComponentMap.forEach((type,value)->{
+            if(type.startsWith(visible)){
+                value.forEach(com->data.accept(com,true));
+            }else {
+                value.forEach(com->data.accept(com,false));
+            }
+        });
     }
     private void setVisible(Object selectedItem) {
         String selectedItemText = (String)selectedItem;
@@ -200,7 +203,6 @@ public class CommonSettingsView {
             case Consts.YOUDAO_AI_TRANSLATOR:
             case Consts.JINSHAN_TRANSLATOR:
                 setVisibleV2("appId");
-                setVisibleV2("appSecret");
                 break;
             case Consts.MICROSOFT_TRANSLATOR:
             case Consts.TENCENT_TRANSLATOR:
