@@ -3,6 +3,7 @@ package com.example.cloud.project.integrated.translate.service.impl;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.example.cloud.project.integrated.common.domain.RemoteTranslateRequest;
+import com.example.cloud.project.integrated.common.domain.TranslateChannelType;
 import com.example.cloud.project.integrated.common.domain.TranslateResponse;
 import com.example.cloud.project.integrated.common.utils.HttpUtils;
 import com.example.cloud.project.integrated.translate.service.Translator;
@@ -20,7 +21,7 @@ import java.util.Objects;
  * @date 2019/09/01
  */
 @Slf4j
-@Service("JinShan")
+@Service(TranslateChannelType.JINSHAN)
 public class JinShanTranslator implements Translator {
 
     private static final String URL = "http://dict-co.iciba.com/api/dictionary.php?key=1E55091D2F202FA617472001B3AF0D39&type=json&w=%s";

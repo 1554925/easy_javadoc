@@ -18,13 +18,13 @@ import java.util.Arrays;
 @Getter
 public enum TranslateChannelType {
     Baidu(TranslateChannelType.BAIDU,TranslateChannelType.BAIDU_ZH_NAME, "https://api.fanyi.baidu.com/doc/21"),
-    YouDaoAi( TranslateChannelType.BAIDU,TranslateChannelType.YOUDAO_ZH_NAME, "https://ai.youdao.com"),
-    Google(TranslateChannelType.BAIDU,TranslateChannelType.GOOGLE_ZH_NAME,true, "https://cloud.google.com"),
-    Microsoft( TranslateChannelType.BAIDU,TranslateChannelType.MICROSOFT_ZH_NAME,true, "https://azure.microsoft.com"),
-    MicrosoftFree( TranslateChannelType.BAIDU,TranslateChannelType.MICROSOFT_FREE_ZH_NAME, "https://azure.microsoft.com"),
-    Tencent( TranslateChannelType.BAIDU,TranslateChannelType.TENCENT_ZH_NAME,true, "https://cloud.tencent.com/document/product/551/7372"),
-    Aliyun( TranslateChannelType.BAIDU, TranslateChannelType.ALIYUN_ZH_NAME, "https://www.aliyun.com/product/ai/alimt"),
-    JinShan(TranslateChannelType.BAIDU,TranslateChannelType.JINSHAN_ZH_NAME, ""),
+    YouDaoAi( TranslateChannelType.YOUDAO,TranslateChannelType.YOUDAO_ZH_NAME, "https://ai.youdao.com"),
+    Google(TranslateChannelType.GOOGLE,TranslateChannelType.GOOGLE_ZH_NAME,true, "https://cloud.google.com"),
+    Microsoft( TranslateChannelType.MICROSOFT,TranslateChannelType.MICROSOFT_ZH_NAME,true, "https://azure.microsoft.com"),
+    MicrosoftFree( TranslateChannelType.MICROSOFT_FREE,TranslateChannelType.MICROSOFT_FREE_ZH_NAME, "https://azure.microsoft.com"),
+    Tencent( TranslateChannelType.TENCENT,TranslateChannelType.TENCENT_ZH_NAME,true, "https://cloud.tencent.com/document/product/551/7372"),
+    Aliyun( TranslateChannelType.ALIYUN, TranslateChannelType.ALIYUN_ZH_NAME, "https://www.aliyun.com/product/ai/alimt"),
+    JinShan(TranslateChannelType.JINSHAN,TranslateChannelType.JINSHAN_ZH_NAME, ""),
     Empty("","Empty",false, "");
 
 
@@ -91,7 +91,7 @@ public enum TranslateChannelType {
     /**
      * 谷歌翻译
      */
-    public static final String GOOGLE_ZH = "GOOGLE_ZH";
+    public static final String GOOGLE = "GOOGLE";
 
     /**
      * 腾讯翻译

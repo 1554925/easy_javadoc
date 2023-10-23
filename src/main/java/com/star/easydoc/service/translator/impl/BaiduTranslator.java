@@ -20,8 +20,8 @@ import org.apache.commons.lang3.RandomStringUtils;
 public class BaiduTranslator extends AbstractTranslator {
     private static final Logger LOGGER = Logger.getInstance(BaiduTranslator.class);
 
-    private static final String URL
-        = "http://api.fanyi.baidu.com/api/trans/vip/translate?from=auto&to=auto&appid=%s&salt=%s&sign=%s&q=%s";
+        private static final String URL
+            = "http://api.fanyi.baidu.com/api/trans/vip/translate?from=auto&to=auto&appid=%s&salt=%s&sign=%s&q=%s";
 
     @Override
     public String translateEn2Ch(String text) {

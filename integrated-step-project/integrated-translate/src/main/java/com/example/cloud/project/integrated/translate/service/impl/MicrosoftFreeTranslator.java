@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.example.cloud.project.integrated.common.domain.RemoteTranslateRequest;
+import com.example.cloud.project.integrated.common.domain.TranslateChannelType;
 import com.example.cloud.project.integrated.common.domain.TranslateResponse;
 import com.example.cloud.project.integrated.common.utils.HttpUtils;
 import com.example.cloud.project.integrated.translate.service.Translator;
@@ -23,7 +24,7 @@ import java.util.Objects;
  * @date 2023/09/13
  */
 @Slf4j
-@Service("MicrosoftFree")
+@Service(TranslateChannelType.MICROSOFT_FREE)
 public class MicrosoftFreeTranslator implements Translator {
 
 

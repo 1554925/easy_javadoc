@@ -34,6 +34,7 @@ public class TranslatorMangerController {
             }
             return R.ok(response);
         }catch (Exception e){
+            e.printStackTrace();
             return R.error(e.getMessage());
         }
 

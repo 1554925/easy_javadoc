@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.example.cloud.project.integrated.common.domain.RemoteTranslateRequest;
+import com.example.cloud.project.integrated.common.domain.TranslateChannelType;
 import com.example.cloud.project.integrated.common.domain.TranslateResponse;
 import com.example.cloud.project.integrated.common.utils.HttpUtils;
 import com.example.cloud.project.integrated.translate.service.Translator;
@@ -22,7 +23,7 @@ import java.util.Objects;
  * @date 2023/04/08
  */
 @Slf4j
-@Service("Microsoft")
+@Service(TranslateChannelType.MICROSOFT)
 public class MicrosoftTranslator implements Translator {
 
     private static final String TRANSLATE_URL = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&textType=plain&from=#from#&to=#to#";

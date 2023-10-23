@@ -3,6 +3,7 @@ package com.example.cloud.project.integrated.translate.service.impl;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.example.cloud.project.integrated.common.domain.RemoteTranslateRequest;
+import com.example.cloud.project.integrated.common.domain.TranslateChannelType;
 import com.example.cloud.project.integrated.common.domain.TranslateResponse;
 import com.example.cloud.project.integrated.common.utils.HttpUtils;
 import com.example.cloud.project.integrated.translate.service.Translator;
@@ -22,10 +23,13 @@ import java.util.Objects;
  * @date 2019/09/01
  */
 @Slf4j
-@Service("Baidu")
+@Service(TranslateChannelType.BAIDU)
 public class BaiduTranslator implements Translator {
     private static final Logger LOGGER = log;
-    private static final String TRANSLATE_URL = "http://mt.cn-hangzhou.aliyuncs.com/api/translate/web/ecommerce";
+
+    private static final String TRANSLATE_URL
+            = "http://api.fanyi.baidu.com/api/trans/vip/translate?from=auto&to=auto&appid=%s&salt=%s&sign=%s&q=%s";
+
     @Override
     public TranslateResponse en2Ch(RemoteTranslateRequest request) {
         return translate(request);

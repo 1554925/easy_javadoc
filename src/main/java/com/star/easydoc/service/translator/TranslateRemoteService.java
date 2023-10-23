@@ -1,11 +1,13 @@
 package com.star.easydoc.service.translator;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.example.cloud.project.integrated.common.domain.R;
 import com.example.cloud.project.integrated.common.domain.RemoteTranslateRequest;
 import com.example.cloud.project.integrated.common.domain.TranslateChannelType;
 import com.example.cloud.project.integrated.common.domain.TranslateResponse;
 import com.example.cloud.project.integrated.common.utils.ObjUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.star.easydoc.common.util.HttpUtil;
 import com.star.easydoc.config.EasyDocConfig;
 import org.apache.commons.lang3.StringUtils;
@@ -35,12 +37,15 @@ public class TranslateRemoteService implements Translator{
             headers.put("Content-Type", contentType);
             String body = JSON.toJSONString(request);
             String responseStr =  HttpUtil.post(easyDocConfig.getProxyUrl(),headers,body);
-            R<?> responseR = ObjUtils.copy(responseStr,R.class);
-
-            if(responseR.isSuccess()){
-                Object data = responseR.getData();
-                if (data instanceof TranslateResponse){
-                    return ((TranslateResponse)data).getTarget();
+            R<TranslateResponse> responseR = JSON.parseObject(responseStr
+                    , new TypeReference<R<TranslateResponse>>() {});
+            if(responseR != null && responseR.isSuccess()){
+                TranslateResponse data = responseR.getData();
+                System.out.println(data);
+                if (data != null){
+                    return data.getTarget();
+                }else {
+                    System.out.println(11111);
                 }
             }
         }catch (Exception e){
@@ -60,7 +65,7 @@ public class TranslateRemoteService implements Translator{
 
     private String translate(String text,String sourceLun,String targetLun) {
         try{
-            TranslateChannelType type = TranslateChannelType.channelType(easyDocConfig.getTranslator());
+            TranslateChannelType type = TranslateChannelType.zhChannelType(easyDocConfig.getTranslator());
             if(!type.isEmpty()){
                 RemoteTranslateRequest request = new RemoteTranslateRequest();
                 request.setFrom(sourceLun);

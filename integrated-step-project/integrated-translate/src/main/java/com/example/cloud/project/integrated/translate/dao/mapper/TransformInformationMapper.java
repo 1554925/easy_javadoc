@@ -12,6 +12,6 @@ import org.apache.ibatis.annotations.Select;
  * @date 2023/10/19 14:30
  */
 public interface TransformInformationMapper extends BaseMapper<TransformInformation> {
-    @Select("select word_length as wordLength,source from "+TransformInformation.TABLE_NAME+" where del_flag = 0 and source =#{source} ")
+    @Select("select word_length as wordLength,target_value as target from "+TransformInformation.TABLE_NAME+" where del_flag = 0 and source_value =#{source} ")
     TranslateResponse selectBySource(@Param("source")String source);
 }

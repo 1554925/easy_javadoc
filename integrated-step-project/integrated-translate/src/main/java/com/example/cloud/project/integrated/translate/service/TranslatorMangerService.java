@@ -91,11 +91,11 @@ public class TranslatorMangerService {
 
     private TranslateResponse getTranslateInformation(RemoteTranslateRequest request) {
         TranslateResponse response = translateCacheService.getCache(request);
-        if(response != null){
+        if(response != null && response.getTarget()!=null){
             return response;
         }
         response = translateMapper.selectBySource(request.getSource());
-        if(response!=null){
+        if(response != null){
             translateCacheService.saveCache(request,response);
         }
         return response;

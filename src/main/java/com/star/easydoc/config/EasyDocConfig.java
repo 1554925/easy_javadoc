@@ -85,7 +85,7 @@ public class EasyDocConfig {
     /**
      * 代理地址
      */
-    private String proxyUrl;
+    private String proxyUrl = "http://localhost:30210/translator/manager/v1/proxy";
 
 
     /**

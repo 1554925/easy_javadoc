@@ -25,6 +25,6 @@ public enum LanguageType {
         return false;
     }
     public static LanguageType language(String name){
-        return Arrays.stream(values()).filter(type -> type.name().equals(name)).findFirst().orElse(NONE);
+        return Arrays.stream(values()).filter(type -> type.name().equalsIgnoreCase(name)).findFirst().orElse(NONE);
     }
 }

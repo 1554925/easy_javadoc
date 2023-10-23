@@ -20,11 +20,11 @@ public class RemoteTranslateRequest {
 
 
     public TranslateChannelType channelType(){
-        return TranslateChannelType.channelType(channelName);
+        return TranslateChannelType.zhChannelType(channelName);
     }
 
     public boolean isOnlyAppKey(){
-        return TranslateChannelType.channelType(channelName).isOnlyAppKey();
+        return TranslateChannelType.zhChannelType(channelName).isOnlyAppKey();
     }
 
 

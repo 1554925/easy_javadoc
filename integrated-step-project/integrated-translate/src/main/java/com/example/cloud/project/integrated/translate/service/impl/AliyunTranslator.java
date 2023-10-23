@@ -27,9 +27,9 @@ import java.util.*;
  * @date 2019/09/01
  */
 @Slf4j
-@Service(TranslateChannelType.CLOSE_ZH_NAME)
+@Service(TranslateChannelType.ALIYUN)
 public class AliyunTranslator implements Translator {
-    private static final String TRANSLATE_URL = "http://api.fanyi.baidu.com/api/trans/vip/translate?from=auto&to=auto&appid=%s&salt=%s&sign=%s&q=%s";
+    private static final String TRANSLATE_URL = "http://mt.cn-hangzhou.aliyuncs.com/api/translate/web/ecommerce";
 
     @Override
     public TranslateResponse en2Ch(RemoteTranslateRequest request) {

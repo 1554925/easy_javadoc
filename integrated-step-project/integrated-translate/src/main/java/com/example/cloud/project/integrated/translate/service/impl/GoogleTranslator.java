@@ -3,6 +3,7 @@ package com.example.cloud.project.integrated.translate.service.impl;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.example.cloud.project.integrated.common.domain.RemoteTranslateRequest;
+import com.example.cloud.project.integrated.common.domain.TranslateChannelType;
 import com.example.cloud.project.integrated.common.domain.TranslateResponse;
 import com.example.cloud.project.integrated.common.utils.HttpUtils;
 import com.example.cloud.project.integrated.translate.service.Translator;
@@ -19,7 +20,7 @@ import java.util.Objects;
  * @date 2023/04/08
  */
 @Slf4j
-@Service("Google")
+@Service(TranslateChannelType.GOOGLE)
 public class GoogleTranslator implements Translator {
 
     private static final String EN2CH_URL

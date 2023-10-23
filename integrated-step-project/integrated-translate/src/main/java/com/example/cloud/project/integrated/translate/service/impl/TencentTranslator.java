@@ -3,6 +3,7 @@ package com.example.cloud.project.integrated.translate.service.impl;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.example.cloud.project.integrated.common.domain.RemoteTranslateRequest;
+import com.example.cloud.project.integrated.common.domain.TranslateChannelType;
 import com.example.cloud.project.integrated.common.domain.TranslateResponse;
 import com.example.cloud.project.integrated.common.utils.HttpUtils;
 import com.example.cloud.project.integrated.translate.service.Translator;
@@ -26,7 +27,7 @@ import java.util.TreeMap;
  * @date 2020/08/26
  */
 @Slf4j
-@Service("Tencent")
+@Service(TranslateChannelType.TENCENT)
 public class TencentTranslator implements Translator {
 
     @Override

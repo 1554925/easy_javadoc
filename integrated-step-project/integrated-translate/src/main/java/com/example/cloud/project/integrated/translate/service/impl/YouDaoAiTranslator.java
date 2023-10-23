@@ -2,6 +2,7 @@ package com.example.cloud.project.integrated.translate.service.impl;
 
 import com.alibaba.fastjson2.JSON;
 import com.example.cloud.project.integrated.common.domain.RemoteTranslateRequest;
+import com.example.cloud.project.integrated.common.domain.TranslateChannelType;
 import com.example.cloud.project.integrated.common.domain.TranslateResponse;
 import com.example.cloud.project.integrated.common.utils.HttpUtils;
 import com.example.cloud.project.integrated.translate.service.Translator;
@@ -24,7 +25,7 @@ import java.util.Objects;
  * @date 2019/09/01
  */
 @Slf4j
-@Service("YouDaoAi")
+@Service(TranslateChannelType.YOUDAO)
 public class YouDaoAiTranslator implements Translator {
 
     private static final String YOUDAO_URL = "https://openapi.youdao.com/api";
