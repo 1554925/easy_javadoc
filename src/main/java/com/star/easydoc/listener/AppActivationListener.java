@@ -87,8 +87,9 @@ public class AppActivationListener implements ApplicationActivationListener {
             }
         };
 
-        NotificationUtil.notify("支持EasyJavadoc", "如果这款小而美的插件为您节约了不少时间，请支持一下开发者！",
-            starAction, reviewsAction, payAction);
+//        NotificationUtil.notify("支持EasyJavadoc", "如果这款小而美的插件为您节约了不少时间，请支持一下开发者！",
+//            starAction, reviewsAction, payAction);
+        NotificationUtil.notify("启动EasyJavadoc", "启动成功"  );
 
         hasNotice = true;
     }

@@ -84,7 +84,7 @@ public class CommonSettingsConfigurable implements Configurable {
             case Consts.ALIYUN_TRANSLATOR:
             case Consts.YOUDAO_AI_TRANSLATOR:
             case Consts.JINSHAN_TRANSLATOR:
-                if (StringUtils.isBlank(config.getAppKey())) {
+                if (StringUtils.isBlank(config.getAppId())) {
                     throw new ConfigurationException("AppId不能为空");
                 }
                 if (StringUtils.isBlank(config.getAppSecret())) {

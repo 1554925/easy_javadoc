@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.star.easydoc.easy-javadoc</id>
-    <name>step Easy Javadoc</name>
-    <vendor email="wangchao.star@gmail.com" url="https://github.com/starcwang">wangchao</vendor>
+    <name>work helper</name>
+    <vendor email="wangchao.star@gmail.com" url="https://github.com/starcwang">step</vendor>
 
     <description><![CDATA[
       This plugin can help you complete the Chinese javadoc/kdoc document quickly.<br>
@@ -14,7 +14,7 @@
     ]]></description>
 
     <change-notes><![CDATA[
-      <h3>v4.0.0</h3>
+      <h3>v4.0.2</h3>
       <ul>
           <li>支持微软免费翻译</li>
       </ul>
@@ -35,7 +35,7 @@
         <applicationService serviceImplementation="com.star.easydoc.javadoc.service.variable.JavadocVariableGeneratorService"/>
         <applicationService serviceImplementation="com.star.easydoc.kdoc.service.variable.KdocVariableGeneratorService"/>
 
-        <applicationConfigurable id="easydoc.common.settings" displayName="EasyDoc" instance="com.star.easydoc.view.settings.CommonSettingsConfigurable"/>
+        <applicationConfigurable id="easydoc.common.settings" displayName="workHelper" instance="com.star.easydoc.view.settings.CommonSettingsConfigurable"/>
 
         <applicationConfigurable parentId="easydoc.common.settings" id="easydoc.javadoc.settings" displayName="EasyDocJavadoc" instance="com.star.easydoc.view.settings.javadoc.JavadocSettingsConfigurable">
             <configurable parentId="easydoc.javadoc.settings" displayName="EasyDocClassTemplate" instance="com.star.easydoc.view.settings.javadoc.template.ClassSettingsConfigurable"/>

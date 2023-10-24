@@ -59,8 +59,6 @@ public class TranslatorMangerService {
         }else {
             response = new TranslateResponse();
         }
-
-
         return response;
     }
     private void save(TranslateResponse response, RemoteTranslateRequest request){
@@ -69,12 +67,14 @@ public class TranslatorMangerService {
             TransformInformation information = new TransformInformation();
             information.setTargetValue(response.getTarget());
             information.setWordLength(response.getWordLength());
-            information.setCreator(request.channelType().getOfficialName());
+//            information.setCreator(request.channelType().getOfficialName());
+            information.setCreator("translate");
             information.setDelFlag(0);
             information.setSourceValue(request.getSource());
             information.setText(request.getText());
             information.setStatus("0");
-            information.setType(request.channelType().name());
+//            information.setType(request.channelType().getCode());
+            information.setType("0");
             translateMapper.insert(information);
 
         });
