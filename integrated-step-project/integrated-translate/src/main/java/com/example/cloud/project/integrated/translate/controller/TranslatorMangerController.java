@@ -5,6 +5,7 @@ import com.example.cloud.project.integrated.common.domain.TranslateResponse;
 import com.example.cloud.project.integrated.common.domain.constant.BizExceptionEnum;
 import com.example.cloud.project.integrated.common.domain.RemoteTranslateRequest;
 import com.example.cloud.project.integrated.translate.service.TranslatorMangerService;
+import com.example.cloud.project.integrated.translate.utils.ObjectTolls;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +33,7 @@ public class TranslatorMangerController {
             if(response == null){
                 return R.error(BizExceptionEnum.INTERFACE_SYSTEM_ERROR);
             }
+            response.setTarget(ObjectTolls.firstWordLower(response.getTarget()));
             return R.ok(response);
         }catch (Exception e){
             e.printStackTrace();

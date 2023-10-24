@@ -18,7 +18,7 @@ import java.util.function.BiFunction;
 @Getter
 public enum TranslateHandle {
     EN_2_CH(Translator::en2Ch, LanguageType.EN,LanguageType.CH),
-    CH_2_EN(Translator::ch2En, LanguageType.EN,LanguageType.CH),
+    CH_2_EN(Translator::ch2En, LanguageType.CH,LanguageType.EN),
     ;
 
     private final BiFunction<Translator, RemoteTranslateRequest,TranslateResponse> function;
